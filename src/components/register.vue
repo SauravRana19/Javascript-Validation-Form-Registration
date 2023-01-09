@@ -1,64 +1,106 @@
 <template>
-  <div class="container">
+  <div class="RegisterD">
     <div class="header">
-      <h1>Register Validations form</h1>
+      <h1>Register form</h1>
     </div>
     <form @submit.prevent id="form">
-      <div class="form-control">
-        <label>Username</label>
-        <input
+      <div class="form-group">
+        <label for=""> First Name:</label
+        ><input
+          class="form-control"
+          placeholder="Enter first name"
           type="text"
-          v-model="username"
-          id="username"
-          placeholder="Enter your Username"
-          autocomplete="off"
-          @keyup="validateName"
+          v-model="v$.form.firstName.$model"
         />
-        <span id="username-error">{{ nameError }}</span>
+        <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+        <!-- Error Message -->
+        <div
+          class="input-errors"
+          v-for="(error, index) of v$.form.firstName.$errors"
+          :key="index"
+        >
+          <div class="error-msg">{{ error.$message }}</div>
+        </div>
       </div>
 
-      <div class="form-control">
-        <label>Email</label>
-        <input
+      <div class="form-group">
+        <label for="">Last Name:</label
+        ><input
+          class="form-control"
+          placeholder="Enter last name"
+          type="text"
+          v-model="v$.form.lastName.$model"
+        />
+        <!-- Error Message -->
+        <div
+          class="input-errors"
+          v-for="(error, index) of v$.form.lastName.$errors"
+          :key="index"
+        >
+          <div class="error-msg">{{ error.$message }}</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for=""> Email address</label
+        ><input
+          class="form-control"
+          placeholder="Enter email"
           type="email"
-          v-model="email"
-          id="contact-email"
-          placeholder="Enter your Email"
-          autocomplete="off"
-          @keyup="validateEmail()"
+          v-model="v$.form.email.$model"
         />
-        <span id="email-error">{{ emailError }} </span>
+        <div class="pre-icon os-icon os-icon-email-2-at2"></div>
+        <!-- Error Message -->
+        <div
+          class="input-errors"
+          v-for="(error, index) of v$.form.email.$errors"
+          :key="index"
+        >
+          <div class="error-msg">{{ error.$message }}</div>
+        </div>
       </div>
 
-      <div class="form-control">
-        <label>Password</label>
-        <input
+      <div class="form-group">
+        <label for=""> Password</label
+        ><input
+          class="form-control"
+          placeholder="Password"
           type="password"
-          v-model="password"
-          id="password"
-          placeholder="Enter your password"
-          autocomplete="off"
-          @keyup="validatePswd()"
+          v-model="v$.form.password.$model"
         />
-        <span id="password-error">{{ passError }}</span>
+        <div class="pre-icon os-icon os-icon-fingerprint"></div>
+        <!-- Error Message -->
+        <div
+          class="input-errors"
+          v-for="(error, index) of v$.form.password.$errors"
+          :key="index"
+        >
+          <div class="error-msg">{{ error.$message }}</div>
+        </div>
       </div>
-
-      <div class="form-control">
-        <label>Repeat password</label>
-        <input
+      <div class="form-group">
+        <label for="">Confirm Password</label
+        ><input
+         
+          class="form-control"
+          placeholder="Confirm Password"
           type="password"
-          v-model="Cpassword"
-          id="Cpassword"
-          placeholder="Check your password"
-          autocomplete="off"
-          @keyup="validateChPswd()"
+          v-model="v$.form.confirmPassword.$model"
+          @keyup="confirmP()"
         />
-        <span id="Cpassword-error">{{ chpswdError }}</span>
+        <!-- Error Message -->
+        <div
+          class="input-errors"
+          v-for="(error, index) of v$.form.confirmPassword.$errors"
+          :key="index"
+        >
+          <div class="error-msg">{{ error.$message }}</div>         
+        </div>
       </div>
 
       <div>
-        <div class="form-controls">
-          <input type="submit" value="Signup" class="btn1" />
+        <div>
+          <button class="buttons-w" style="margin-top: 10%;" :disabled="v$.form.$invalid">Signup</button>
         </div>
       </div>
     </form>
@@ -66,93 +108,73 @@
 </template>
 
 <script>
+import useVuelidate from "@vuelidate/core";
+import { required, email, minLength,sameAs} from "@vuelidate/validators";
+
+export function validName(name) {
+  let validNamePattern = new RegExp("^[a-zA-Z]+(?:[-'\\s][a-zA-Z]+)*$");
+  if (validNamePattern.test(name)) {
+    return true;
+  }
+  return false;
+}
+
 export default {
-  name: "regi-ster",
+  name: "regis-ter",
+
+  setup() {
+    return { v$: useVuelidate() };
+  },
+
   data() {
     return {
-      username: "",
-      email: "",
-      password: "",
-      cpassword: "",
-
-      nameError: "",
-      emailError: "",
-      passError: "",
-      cpassError: "",
-      chpswdError: "",
+      form: {
+        
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        
+      },
     };
   },
-  methods: {
-    validateName() {
-      if (this.username.length == 0) {
-        this.nameError = "Please enter a name";
-        return false;
-      }
-      if (!this.username.match(/^[a-zA-Z0-9]+$/)) {
-        this.nameError = "Please enter full name";
-        return false;
-      }
-      this.nameError = " Username Valid";
-      return true;
-    },
-    validateEmail() {
-      if (this.email.length == 0) {
-        this.emailError = "Email is required";
-        return false;
-      }
-      if (
-        !this.email.match(
-          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        )
-      ) {
-        this.emailError = "Email is valid";
-        return false;
-      }
-      this.emailError = "";
-      return true;
-    },
-    validatePswd() {
-      if (this.password.length == 0) {
-        this.passError = "Password is required";
-        return false;
-      }
-      if (
-        !this.password.match(
-          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        )
-      ) {
-        this.passError = "Password is valid";
-        return false;
-      }
-      this.passError = "";
-      return true;
-    },
-    validateChPswd() {
-      if (this.cpassword.length == 0) {
-        this.chpswdError = "Repeat Password required";
-        return false;
-      }
-      if (
-        !this.cpassword.match(
-          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        )
-      ) {
-        this.chpswdError = "Password Repeated";
-        return false;
-      }
-      this.chpswdError = "";
-      return true;
-    },
+  validations() {
+    return {
+      form: {
+        firstName: {
+          required,
+          name_validation: {
+            $validator: validName,
+            $message:
+              "Invalid Name. Valid name only contain letters, dashes (-) and spaces",
+          },
+        },
+        lastName: {
+          required,
+          name_validation: {
+            $validator: validName,
+            $message:
+              "Invalid Name. Valid name only contain letters, dashes (-) and spaces",
+          },
+        },
+        email: { required, email },
+        password: { required, min: minLength(6) },
+        confirmPassword: { required, sameAs: sameAs(this.form.password)},
+      },
+    };
   },
 };
 </script>
 
 <style>
 .header h1 {
-  font-size: 2.5vw;
+  margin-left: 20%;
+  font-size: 3vw;
   color: rgba(14, 28, 107, 0.996);
 }
-.container {
+.RegisterD {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   position: relative;
   background: linear-gradient(
     90deg,
@@ -160,11 +182,12 @@ export default {
     rgb(158, 155, 221) 100%
   );
   border-radius: 15px;
-  width: 32vw;
-  height: auto;
+  width: 29em;
+  height: 100%;
   margin-top: 5%;
 }
 .form-controls .btn1 {
+  
   color: #fafafa;
   font-size: 20px;
   background-color: #d93476;
@@ -181,11 +204,12 @@ export default {
   text-decoration: none;
 }
 form {
+  margin-left: 15%;
   padding: 5px;
+  width: 70%;
 }
 .form-control {
-  width: 100%;
-  height: 7vw;
+ 
   margin-bottom: 5px;
   position: relative;
 }
@@ -195,7 +219,6 @@ form {
   font-size: 1.2vw;
 }
 .form-control input {
-  width: 98%;
   border: 2px solid #f0f0f0;
   border-radius: 15px;
   display: block;
