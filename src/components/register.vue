@@ -81,7 +81,6 @@
       <div class="form-group">
         <label for="">Confirm Password</label
         ><input
-         
           class="form-control"
           placeholder="Confirm Password"
           type="password"
@@ -94,13 +93,28 @@
           v-for="(error, index) of v$.form.confirmPassword.$errors"
           :key="index"
         >
-          <div class="error-msg">{{ error.$message }}</div>         
+          <div class="error-msg">{{ error.$message }}</div>
         </div>
       </div>
 
       <div>
         <div>
-          <button class="buttons-w" style="margin-top: 10%;" :disabled="v$.form.$invalid">Signup</button>
+          <button
+            class="buttons-w"
+            style="margin-top: 10%"
+            :disabled="v$.form.$invalid"
+          >
+            Signup
+          </button>
+          <p>
+            All ready Account
+            <a href="#"
+              ><span style="font-size: medium; color: blue; margin-left: 5%"
+              @click="loginUser()"
+                >click here</span
+              ></a
+            >
+          </p>
         </div>
       </div>
     </form>
@@ -109,7 +123,7 @@
 
 <script>
 import useVuelidate from "@vuelidate/core";
-import { required, email, minLength,sameAs} from "@vuelidate/validators";
+import { required, email, minLength, sameAs } from "@vuelidate/validators";
 
 export function validName(name) {
   let validNamePattern = new RegExp("^[a-zA-Z]+(?:[-'\\s][a-zA-Z]+)*$");
@@ -129,18 +143,17 @@ export default {
   data() {
     return {
       form: {
-        
         firstName: "",
         lastName: "",
         email: "",
         password: "",
         confirmPassword: "",
-        
       },
     };
   },
   validations() {
     return {
+      
       form: {
         firstName: {
           required,
@@ -160,10 +173,17 @@ export default {
         },
         email: { required, email },
         password: { required, min: minLength(6) },
-        confirmPassword: { required, sameAs: sameAs(this.form.password)},
+        confirmPassword: { required, sameAs: sameAs(this.form.password) },
       },
     };
   },
+  methods:{
+    loginUser() {
+    console.log(this.form.email);
+    this.$router.push({ name: "login" });
+  },
+  }
+
 };
 </script>
 
@@ -187,7 +207,6 @@ export default {
   margin-top: 5%;
 }
 .form-controls .btn1 {
-  
   color: #fafafa;
   font-size: 20px;
   background-color: #d93476;
@@ -209,7 +228,6 @@ form {
   width: 70%;
 }
 .form-control {
- 
   margin-bottom: 5px;
   position: relative;
 }

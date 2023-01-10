@@ -3,6 +3,7 @@ import home from "@/views/home.vue";
 import register from "@/components/register.vue";
 import login from "@/components/login.vue";
 import dasbord from "@/components/dashbord.vue";
+import userdata from "@/components/userdata.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/dashboard",
     name: "dash-board",
     component: dasbord,
+  },
+  {
+    path: "/userdata/:id",
+    name: "userdata",
+    component: userdata,
   }
 ];
 

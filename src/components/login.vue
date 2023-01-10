@@ -55,6 +55,7 @@
             :disabled="v$.form.$invalid"
             class="buttons-w"
             style="margin-top: 10%"
+            @click="addUser()"
           >
             Login
           </button>
@@ -95,6 +96,12 @@ export default {
         },
       },
     };
+  },
+  methods: {
+    addUser() {
+      console.log(this.form.email);
+      this.$router.push({ name: "dash-board" });
+    },
   },
 };
 </script>
@@ -144,7 +151,7 @@ export default {
   outline: 0;
   border: #f0f3f5;
 }
-.error-msg{
+.error-msg {
   color: red;
 }
 </style>
