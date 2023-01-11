@@ -2,7 +2,7 @@
   <div class="loginD">
     <div class="headers">
       <h1>Login form</h1>
-      <form @submit.prevent="onSubmit">
+      <form @submit.prevent="signIn()">
         <!-- Email -->
         <div
           class="form-group"
@@ -55,7 +55,6 @@
             :disabled="v$.form.$invalid"
             class="buttons-w"
             style="margin-top: 10%"
-            @click="addUser()"
           >
             Login
           </button>
@@ -76,6 +75,7 @@ export default {
 
   data() {
     return {
+      users: [],
       form: {
         email: "",
         password: "",
@@ -98,9 +98,19 @@ export default {
     };
   },
   methods: {
-    addUser() {
-      console.log(this.form.email);
-      this.$router.push({ name: "dash-board" });
+    signIn() {
+      let EmailR = localStorage.getItem("resigterUser");
+      const tempData =JSON.parse(EmailR) 
+      const [LocalData]= tempData
+      const {email, password}=LocalData
+      console.log("ssssssss",email,password)
+
+      if (this.form.email === email && this.form.password === password) {
+        alert("Login successful")
+        this.$router.push("/dashboard");
+      } else {
+        alert("email and password is incorrect");
+      }
     },
   },
 };

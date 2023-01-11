@@ -3,7 +3,7 @@
     <div class="header">
       <h1>Register form</h1>
     </div>
-    <form @submit.prevent id="form">
+    <form @submit.prevent="loginUser()">
       <div class="form-group">
         <label for=""> First Name:</label
         ><input
@@ -85,7 +85,7 @@
           placeholder="Confirm Password"
           type="password"
           v-model="v$.form.confirmPassword.$model"
-          @keyup="confirmP()"
+         
         />
         <!-- Error Message -->
         <div
@@ -141,7 +141,9 @@ export default {
   },
 
   data() {
+    
     return {
+      data:[],
       form: {
         firstName: "",
         lastName: "",
@@ -180,6 +182,10 @@ export default {
   methods:{
     loginUser() {
     console.log(this.form.email);
+    this.data.push(this.form);
+    localStorage.setItem("resigterUser", JSON.stringify(this.data));
+    alert("User Registerd")
+    console.log(this.data)
     this.$router.push({ name: "login" });
   },
   }
