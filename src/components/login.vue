@@ -58,6 +58,7 @@
           >
             Login
           </button>
+          <p> <a href="#" @click="registeruser()">Create account </a> </p>
         </div>
       </form>
     </div>
@@ -99,7 +100,7 @@ export default {
   },
   methods: {
     signIn() {
-      let EmailR = localStorage.getItem("resigterUser");
+      let EmailR = localStorage.getItem("registerUser");
       const tempData =JSON.parse(EmailR) 
       const [LocalData]= tempData
       const {email, password}=LocalData
@@ -112,6 +113,10 @@ export default {
         alert("email and password is incorrect");
       }
     },
+    registeruser(){
+      this.$router.push("/register");
+
+    }
   },
 };
 </script>

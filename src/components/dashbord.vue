@@ -1,5 +1,5 @@
 <template>
-  <div> <headers></headers></div>
+  <div><headers></headers></div>
   <div class="tables">
     <table class="table">
       <thead class="thead-dark">
@@ -8,11 +8,13 @@
         <th style="text-align: center">Title</th>
         <th style="text-align: center">Show Data</th>
 
-        <tr v-for="(item) in post" v-bind:key="item.id">
+        <tr v-for="item in post" v-bind:key="item.id">
           <td>{{ item.id }}</td>
           <td>{{ item.title }}</td>
           <td>
-            <button class="btn1" @click="DiscUser(item.id)">Show description</button>
+            <button class="btn1" @click="DiscUser(item.id)">
+              Show description
+            </button>
           </td>
         </tr>
       </thead>
@@ -22,17 +24,21 @@
 <Router-view></Router-view>
 <script>
 import axios from "axios";
-import headers from '@/components/header.vue'
+import headers from "@/components/header.vue";
+
+
 export default {
   name: "dash-board",
-  components:{ headers },
+  components: { headers },
   data() {
     return {
       post: [],
       id: this.key,
+
     };
   },
   methods: {
+
     getdata() {
       axios
         .get(`https://jsonplaceholder.typicode.com/posts/`)
@@ -45,22 +51,21 @@ export default {
       this.$router.push({
         name: "userdata",
         params: {
-          id: recordId
-        }
+          id: recordId,
+        },
       });
     },
   },
-
   mounted() {
     this.getdata();
   },
+ 
 };
 </script>
 <style>
-
 .tables {
   /* margin-top: 20px; */
-  border-radius: 0 0 10px 10px ;
+  border-radius: 0 0 10px 10px;
   background-color: aliceblue;
   width: 100%;
   height: auto;

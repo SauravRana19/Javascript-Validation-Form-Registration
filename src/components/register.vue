@@ -3,7 +3,7 @@
     <div class="header">
       <h1>Register form</h1>
     </div>
-    <form @submit.prevent="loginUser()">
+    <form @submit.prevent="registerUser()">
       <div class="form-group">
         <label for=""> First Name:</label
         ><input
@@ -85,7 +85,6 @@
           placeholder="Confirm Password"
           type="password"
           v-model="v$.form.confirmPassword.$model"
-         
         />
         <!-- Error Message -->
         <div
@@ -109,8 +108,9 @@
           <p>
             All ready Account
             <a href="#"
-              ><span style="font-size: medium; color: blue; margin-left: 5%"
-              @click="loginUser()"
+              ><span
+                style="font-size: medium; color: blue; margin-left: 5%"
+                @click="loginUser()"
                 >click here</span
               ></a
             >
@@ -141,9 +141,8 @@ export default {
   },
 
   data() {
-    
     return {
-      data:[],
+      data: [],
       form: {
         firstName: "",
         lastName: "",
@@ -155,7 +154,6 @@ export default {
   },
   validations() {
     return {
-      
       form: {
         firstName: {
           required,
@@ -179,17 +177,19 @@ export default {
       },
     };
   },
-  methods:{
+  methods: {
+    registerUser() {
+      console.log(this.form.email);
+      this.data.push(this.form);
+      localStorage.setItem("registerUser", JSON.stringify(this.data));
+      alert("User Registerd");
+      console.log(this.data);
+      this.$router.push({ name: "login" });
+    },
     loginUser() {
-    console.log(this.form.email);
-    this.data.push(this.form);
-    localStorage.setItem("resigterUser", JSON.stringify(this.data));
-    alert("User Registerd")
-    console.log(this.data)
-    this.$router.push({ name: "login" });
+      this.$router.push({ name: "login" });
+    },
   },
-  }
-
 };
 </script>
 
