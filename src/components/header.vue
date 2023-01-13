@@ -1,19 +1,12 @@
 <template>
   <header>
+    
     <nav
       class="navbar navbar-expand-lg navbar-light bg-light border border-bottom-0-dark rounded-top"
-    >
+    ><h1> Dashboard</h1>
       <div class="container-fluid">
-        <a
-          @click="home()"
-          class="nav-link active"
-          aria-current="page"
-          href="#"
-          style="font-size: 1.5vw"
-          >Home</a
-        >
-
-        <div class="navbar" style="margin-left: 50%">
+        <div class="navbar" style="margin-left: 85%">
+          
           <ul class="navbar-nav">
             <li class="nav-item dropdown">
               <a
@@ -33,7 +26,9 @@
                 />
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li @click="alluser()"><a class="dropdown-item" href="#">All Users info </a></li>
+                <li @click="alluser()">
+                  <a class="dropdown-item" href="#">All Users info </a>
+                </li>
                 <li @click="logout()">
                   <a class="dropdown-item" href="">Log out</a>
                 </li>
@@ -57,14 +52,9 @@ export default {
       window.alert("logout succesfuly succeeded");
       this.$router.push({ name: "login" });
     },
-    alluser(){
-      
+    alluser() {
       this.$router.push({ name: "user-profile" });
-
-    }
-  },
-  home() {
-    this.$router.push({ name: "login" });
+    },
   },
 };
 </script>
