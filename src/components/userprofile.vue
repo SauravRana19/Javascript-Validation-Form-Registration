@@ -1,28 +1,32 @@
 <template>
   <div class="data">
-    <h1 style="margin-left: 12em">User Data</h1>
+    <h2 style="margin-left: 8em"> Welcome Admin </h2>
+    <h1 style="margin-left: 9.5em;font-size: 2.2vw;" >All Users info</h1>
     <div>
       <headers />
       <div class="container">
         <table class="table">
           <thead class="thead-dark">
             <th>Name</th>
-            <th> Lastname</th>
+            <th>Lastname</th>
             <th>Email</th>
             <th>Password</th>
-            
             <tr v-for="item in data" v-bind:key="item.id">
               <td>{{ item.firstName }}</td>
               <td>{{ item.lastName }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.password }}</td>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <button class="btn1" @click="DiscUser(item.id)">User Data</button>
-      <td>{{ post[0] }}</td>
+            </tr>                  
+          <tr v-for="index in userdata" v-bind:key="index.id">
+            <td>{{ index?.first_name}}</td>
+            <td>{{ index?.last_name}}</td>
+            <td>{{ index?.email}}</td>
+            
+          </tr>         
+        </thead>
+      </table>
     </div>
+  </div>
   </div>
 </template>
 <script>
@@ -34,17 +38,19 @@ export default {
   data() {
     return {
       data: [],
-      post: [],
+      userdata: [],
       id: this.key,
     };
   },
   methods: {
     getData() {
-      axios
-        .get(`https://jsonplaceholder.typicode.com/posts/`)
-        .then((response) => {
-          this.post = response.data;
-        });
+      axios.get(`https://reqres.in/api/users`).then((response) => {
+        console.log("response",response.data?.data);
+        // this.userdata = response.data;
+        this.userdata = response.data?.data;
+        console.log(this.userdata);
+        
+      });
     },
     DiscUser(recordId) {
       this.$router.push({
@@ -84,7 +90,8 @@ export default {
 </script>
 <style>
 .data {
-  width: 50em;
+  width: 35em;
+  margin-top: 5%;
   background-image: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
@@ -95,5 +102,6 @@ export default {
 tr {
   height: 2em;
   font-size: larger;
+  font-style: initial;
 }
 </style>

@@ -1,31 +1,27 @@
-<template>
-  <div><headers></headers></div>
+<template >
+  <section style="margin-top: 5%;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+  <div ><headers></headers></div>
   <div class="tables">
     <table class="table">
       <thead class="thead-dark">
-        <th>UserID</th>
-
-        <th style="text-align: center">Title</th>
-        <th style="text-align: center">Show Data</th>
+        <th>Name</th>
+        <th>Email</th>
 
         <tr v-for="item in post" v-bind:key="item.id">
-          <td>{{ item.id }}</td>
-          <td>{{ item.title }}</td>
-          <td>
-            <button class="btn1" @click="DiscUser(item.id)">
-              Show description
-            </button>
-          </td>
+          <a   href="#"
+            ><td @click="DiscUser(item.id)">{{ item.name }}</td></a
+          >
+          <td>{{ item.email }}</td>
         </tr>
       </thead>
     </table>
   </div>
+</section>
 </template>
 <Router-view></Router-view>
 <script>
 import axios from "axios";
 import headers from "@/components/header.vue";
-
 
 export default {
   name: "dash-board",
@@ -34,17 +30,13 @@ export default {
     return {
       post: [],
       id: this.key,
-
     };
   },
   methods: {
-
     getdata() {
-      axios
-        .get(`https://jsonplaceholder.typicode.com/posts/`)
-        .then((response) => {
-          this.post = response.data;
-        });
+      axios.get(`https://gorest.co.in/public/v2/users`).then((response) => {
+        this.post = response.data;
+      });
     },
 
     DiscUser(recordId) {
@@ -55,11 +47,15 @@ export default {
         },
       });
     },
+    showData() {
+      this.$router.push({
+        name: "userdata",
+      });
+    },
   },
   mounted() {
     this.getdata();
   },
- 
 };
 </script>
 <style>

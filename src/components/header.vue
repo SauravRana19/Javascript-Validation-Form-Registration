@@ -13,7 +13,7 @@
           >Home</a
         >
 
-        <div class="navbar" style="margin-left: 85%">
+        <div class="navbar" style="margin-left: 50%">
           <ul class="navbar-nav">
             <li class="nav-item dropdown">
               <a
@@ -33,7 +33,7 @@
                 />
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Account Setting</a></li>
+                <li @click="alluser()"><a class="dropdown-item" href="#">All Users info </a></li>
                 <li @click="logout()">
                   <a class="dropdown-item" href="">Log out</a>
                 </li>
@@ -57,6 +57,11 @@ export default {
       window.alert("logout succesfuly succeeded");
       this.$router.push({ name: "login" });
     },
+    alluser(){
+      
+      this.$router.push({ name: "user-profile" });
+
+    }
   },
   home() {
     this.$router.push({ name: "login" });
