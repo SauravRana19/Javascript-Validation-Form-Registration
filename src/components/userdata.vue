@@ -15,7 +15,8 @@
                 class="rounded-circle img-fluid"
                 style="width: 150px"
               />
-              <h5 class="my-3">{{ data.name }}</h5>
+              <h2> Welcome</h2>
+              <h5 style="font-size: 1.2vw;">{{ data.name }}</h5>
             </div>
           </div>
         </div>
@@ -36,7 +37,7 @@
                   <p class="mb-0"><b>Email:</b></p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0 capitalize">{{ data.email }}</p>
+                  <p class="text-muted mb-0 ">{{ data.email }}</p>
                 </div>
               </div>
               <hr />
@@ -51,7 +52,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0"><b>Status:</b></p>
+                  <p class="mb-0 "><b>Status:</b></p>
                 </div>
                 <div class="col-sm-9">
                   <p class="text-muted mb-0 capitalize">{{ data.status }}</p>
