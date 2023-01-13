@@ -62,19 +62,7 @@ export default {
     },
   },
 
-  //   let EmailR = localStorage.getItem("registerUser");
-
-  //   let tempData = JSON.parse(EmailR);
-  //   this.data.push(this.tempData);
-  //   console.log(tempData);
-
-  //   const [LocalData] = tempData;
-
-  //   const { firstName, lastName, email, password } = LocalData;
-
-  //   this.data.push(firstName, lastName, email, password);
-  //   console.log(this.data);
-  // },
+  
 
   mounted() {
     this.data = localStorage.getItem("registerUser");
