@@ -1,6 +1,6 @@
 <template>
   <div class="RegisterD">
-    <h1>user Form</h1>
+    <h1>Edit UserData</h1>
     <form @submit.prevent>
       <div class="form-group">
         <label for=""> FullName:</label
@@ -32,26 +32,29 @@
         />
         <!-- Error Message -->
       </div>
-      <button type="button" class="btn btn-primary"  @click="Adddata()">Add</button>
-      <button type="button" class="btn btn-warning"  @click="returnd()"> Return</button>
+      <button type="button" class="btn btn-warning" @click="Update()">
+        Update
+      </button>
+      <button type="button" class="btn btn-success" @click="back()"> Return</button>
     </form>
   </div>
 </template>
 <script>
 export default {
-  name: "user-form",
+  name: "user-edit",
   data() {
     return {
       post: [],
       FullName: "",
       Email: "",
       number: "",
+      id: this.$route.params.id,
     };
   },
   methods: {
-    Adddata() {
-      fetch(" https://api-generator.retool.com/jJl7vj/data", {
-        method: "POST",
+    Update() {
+      fetch("https://api-generator.retool.com/jJl7vj/data/" + this.id, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -61,18 +64,22 @@ export default {
           number: this.number,
         }),
       })
-        .then((response) => {
-          return response.json();
+        .then((res) => {
+          if (res.ok) {
+            console.log("PUT Request Successful");
+            alert("User Data Updated Successful");
+            this.$router.push({ name: "dash-board" });
+          } else {
+            console.log("PUT Request Failed");
+          }
+          return res;
         })
-        .then((data) => {
-          console.log(data);
-          this.post = data;
-        });
-      alert("user Added");
-      this.$router.push("/newuser");
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
     },
-    returnd(){
-      this.$router.push({ name: "dash-board" });
+    back(){
+        this.$router.push({ name: "userdata" });
     }
   },
 };

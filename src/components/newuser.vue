@@ -3,16 +3,15 @@
   <div class="tables">
     <table class="table">
       <thead class="thead-dark">
-        <th>UserID</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
+        <th>ID</th>
         <th>Email</th>
+        <th>Number</th>
 
         <tr v-for="item in post" v-bind:key="item.id">
           <td>{{ item.id }}</td>
+          <a href="#"><td @click="DiscUser(item.id)">{{ item.FullName}}</td></a>
           <td>{{ item.email }}</td>
-          <td>{{ item.first_name }}</td>
-          <td>{{ item.last_name }}</td>
+          <td>{{ item.number }}</td>
         </tr>
       </thead>
     </table>
@@ -24,7 +23,7 @@ import axios from "axios";
 import headers from "@/components/header.vue";
 export default {
   name: "new-Users",
-  components:{ headers},
+  components: { headers },
   data() {
     return {
       post: "",
@@ -32,8 +31,18 @@ export default {
   },
   methods: {
     getdata() {
-      axios.get(`https://reqres.in/api/users`).then((response) => {
-        this.post = response.data.data;
+      axios
+        .get(`https://api-generator.retool.com/jJl7vj/data`)
+        .then((response) => {
+          this.post = response.data;
+        });
+    },
+    DiscUser(recordId) {
+      this.$router.push({
+        name: "userdata",
+        params: {
+          id: recordId,
+        },
       });
     },
   },

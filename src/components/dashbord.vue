@@ -1,22 +1,31 @@
-<template >
-  <section style="margin-top: 5%;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-  <div ><headers></headers></div>
-  <div class="tables">
-    <table class="table">
-      <thead class="thead-dark">
-        <th>Name</th>
-        <th>Email</th>
+<template>
+  <section style="margin-top: 15%; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;width: 40rem;" >
+    <div><headers></headers></div>
+    <div class="tables">
+      <table class="table">
+        <thead class="thead-dark">
+          <th>Id</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Number</th>
 
-        <tr v-for="item in post" v-bind:key="item.id">
-          <a   href="#"
-            ><td @click="DiscUser(item.id)">{{ item.name }}</td></a
-          >
-          <td>{{ item.email }}</td>
-        </tr>
-      </thead>
-    </table>
-  </div>
-</section>
+          <tr v-for="item in post" v-bind:key="item.id">
+            <td>{{ item.id }}</td>
+            <a href="#"
+              ><td @click="DiscUser(item.id)">
+                {{ item.FullName }}
+              </td></a
+            >
+            <td @click="DiscUser(item.id)" >{{ item.email }}</td>
+            <td >{{ item.number }}</td>
+          </tr>
+        </thead>
+      </table>
+      <button style="margin-left: 15rem;" type="button" class="btn btn-success" @click="Add()">
+        Add New User
+      </button>
+    </div>
+  </section>
 </template>
 <Router-view></Router-view>
 <script>
@@ -34,9 +43,11 @@ export default {
   },
   methods: {
     getdata() {
-      axios.get(`https://gorest.co.in/public/v2/users`).then((response) => {
-        this.post = response.data;
-      });
+      axios
+        .get(`https://api-generator.retool.com/jJl7vj/data`)
+        .then((response) => {
+          this.post = response.data;
+        });
     },
 
     DiscUser(recordId) {
@@ -47,9 +58,9 @@ export default {
         },
       });
     },
-    showData() {
+    Add() {
       this.$router.push({
-        name: "userdata",
+        name: "user-form",
       });
     },
   },

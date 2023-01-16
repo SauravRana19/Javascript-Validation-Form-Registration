@@ -1,7 +1,8 @@
 <template>
   <div class="data">
-    <h2 style="margin-left: 8em"> Welcome Admin </h2>
-    <h1 style="margin-left: 9.5em;font-size: 2.2vw;" >All Users info</h1>
+    <h2 style="margin-left: 8em">Welcome Admin</h2>
+    <h1 style="margin-left: 9.5em; font-size: 2.2vw">All Users info</h1>
+
     <div>
       <headers />
       <div class="container">
@@ -16,17 +17,17 @@
               <td>{{ item.lastName }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.password }}</td>
-            </tr>                  
-          <tr v-for="index in userdata" v-bind:key="index.id">
-            <td>{{ index?.first_name}}</td>
-            <td>{{ index?.last_name}}</td>
-            <td>{{ index?.email}}</td>
-            
-          </tr>         
-        </thead>
-      </table>
+            </tr>
+            <tr v-for="index in userdata" v-bind:key="index.id">
+              <td>{{ index.id }}</td>
+              <td>{{ index.Fullname }}</td>
+              <td>{{ index.email }}</td>
+              <td>{{ index.number }}</td>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 <script>
@@ -44,13 +45,14 @@ export default {
   },
   methods: {
     getData() {
-      axios.get(`https://reqres.in/api/users`).then((response) => {
-        console.log("response",response.data?.data);
-        // this.userdata = response.data;
-        this.userdata = response.data?.data;
-        console.log(this.userdata);
-        
-      });
+      axios
+        .get(`https://api-generator.retool.com/jJl7vj/data`)
+        .then((response) => {
+          console.log("response", response.data);
+          // this.userdata = response.data;
+          this.userdata = response.data;
+          console.log(this.userdata);
+        });
     },
     DiscUser(recordId) {
       this.$router.push({
@@ -61,8 +63,6 @@ export default {
       });
     },
   },
-
-  
 
   mounted() {
     this.data = localStorage.getItem("registerUser");

@@ -3,7 +3,7 @@
     class="rounded"
     style="background-color: #eee; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px"
   >
-    <div class="container" style="margin-top: 10%; border-radius: ">
+    <div class="container" style="margin-top: 10%; width: 50rem">
       <headers />
       <div class="row">
         <div class="col-lg-4">
@@ -15,8 +15,8 @@
                 class="rounded-circle img-fluid"
                 style="width: 150px"
               />
-              <h2> Welcome</h2>
-              <h5 style="font-size: 1.2vw;">{{ data.name }}</h5>
+              <h2>Welcome</h2>
+              <h5 style="font-size: 1.2vw">{{ data.name }}</h5>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@
                   <p class="mb-0"><b>Full Name:</b></p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0 capitalize">{{ data.name }}</p>
+                  <p class="text-muted mb-0 capitalize">{{ data.FullName }}</p>
                 </div>
               </div>
               <hr />
@@ -37,28 +37,54 @@
                   <p class="mb-0"><b>Email:</b></p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0 ">{{ data.email }}</p>
+                  <p class="text-muted mb-0">{{ data.email }}</p>
                 </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0"><b>Gender:</b></p>
+                  <p class="mb-0"><b>User ID:</b></p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0 capitalize">{{ data.gender }}</p>
+                  <p class="text-muted mb-0 capitalize">{{ data.id }}</p>
                 </div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0 "><b>Status:</b></p>
+                  <p class="mb-0"><b>Status:</b></p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0 capitalize">{{ data.status }}</p>
+                  <p class="text-muted mb-0 capitalize">{{ data.number }}</p>
                 </div>
               </div>
+              
               <hr />
+              <button
+              style="width: 10rem;margin-left: 35%;"
+              type="button"
+              class="btn btn-success"
+              @click="editUser()"
+            >
+              Edit User
+            </button>
+            <button
+              style="width: 10rem;margin-left: 35%;margin-top: 5px;"
+              type="button"
+              class="btn btn-danger"
+              @click="Dell()"
+            >
+              Delete user
+            </button>
+
+            <button
+              style="width: 10rem;margin-left: 35%;margin-top: 5px;"
+              type="button"
+              class="btn btn-secondary"
+              @click="returnUser()"
+            >
+              Return
+            </button>
             </div>
           </div>
         </div>
@@ -75,6 +101,9 @@ export default {
   components: { headers },
   data() {
     return {
+      name: "",
+      email: "",
+      number: "",
       data: "",
       errormsg: "",
       id: this.$route.params.id,
@@ -83,7 +112,7 @@ export default {
   methods: {
     getdata() {
       axios
-        .get(`https://gorest.co.in/public/v2/users/` + this.id)
+        .get(`https://api-generator.retool.com/jJl7vj/data/` + this.id)
         .then((response) => {
           console.log(response.data);
           this.data = response.data;
@@ -92,6 +121,33 @@ export default {
           console.log(error);
           this.errormsg = "error in Data";
         });
+    },
+    Dell() {
+      fetch("https://api-generator.retool.com/jJl7vj/data/" + this.id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            alert("Delete successfully");
+            // prompt("Are you sure you want to delete")
+            // confirm("Are you sure you want to delete");
+            console.log("DELETE Request Successful");
+            window.location.reload();
+          } else {
+            console.log("DELETE  Request Failed");
+          }
+          return res;
+        })
+        .then((res) => console.log(res));
+    },
+    editUser() {
+      this.$router.push({ name: "user-edit" });
+    },
+    returnUser() {
+      this.$router.push({ name: "dash-board" });
     },
   },
   mounted() {

@@ -29,6 +29,7 @@
                 <li @click="alluser()">
                   <a class="dropdown-item" href="#">All Users info </a>
                 </li>
+                <li @click="home()"><a class="dropdown-item" href="#"> Return Home</a></li>
                 <li @click="logout()">
                   <a class="dropdown-item" href="">Log out</a>
                 </li>
@@ -55,7 +56,11 @@ export default {
     alluser() {
       this.$router.push({ name: "user-profile" });
     },
+    home() {
+      
+      this.$router.push({ name: "dash-board" });
   },
-};
+}
+}
 </script>
 <style></style>

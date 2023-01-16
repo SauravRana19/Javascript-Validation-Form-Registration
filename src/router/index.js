@@ -8,22 +8,25 @@ import header from "@/components/header.vue";
 import userProfile from "@/components/userprofile.vue";
 import userform from "@/components/userform.vue";
 import newuser from "@/components/newuser.vue";
+import useredit from "@/components/userEdit.vue";
 
 const routes = [
   {
     path: "/",
     name: "Ho-me",
     component: home,
+    beforeEnter : guardMyroute,
     // meta: {
-    //   auth: true,
+    //   auth: false,
     // },
   },
   {
     path: "/register",
     name: "Register",
     component: register,
+    // beforeEnter : guardMyroute,
     // meta: {
-    //   auth: true,
+    //   auth: false,
     // },
   },
   {
@@ -38,6 +41,7 @@ const routes = [
     path: "/dashboard",
     name: "dash-board",
     component: dasbord,
+    beforeEnter : guardMyroute,
     // meta: {
     //   auth: true,
     // },
@@ -46,6 +50,7 @@ const routes = [
     path: "/userdata/:id",
     name: "userdata",
     component: userdata,
+    beforeEnter : guardMyroute,
     // meta: {
     //   auth: true,
     // },
@@ -54,22 +59,25 @@ const routes = [
     path: "/header",
     name: "hea-der",
     component: header,
+    beforeEnter : guardMyroute,
     // meta: {
-    //   auth: true,
+    //   auth: false,
     // },
   },
   {
     path: "/userProfile",
     name: "user-profile",
     component: userProfile,
+    beforeEnter : guardMyroute,
     // meta: {
-    //   auth: true,
+    //   auth: false,
     // },
   },
   {
     path: "/userform",
     name: "user-form",
     component: userform,
+    beforeEnter : guardMyroute,
     // meta: {
     //   auth: true,
     // },
@@ -78,16 +86,44 @@ const routes = [
     path: "/newuser",
     name: "new-user",
     component: newuser,
+    beforeEnter : guardMyroute,
     // meta: {
     //   auth: true,
     // },
-  }
+  },
+  {
+    path: "/useredit/:id",
+    name: "user-edit",
+    component: useredit,
+    beforeEnter : guardMyroute,
+    // meta: {
+    //   auth: true,
+    // }
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+function guardMyroute(to, from, next)
+{
+ var isAuthenticated= false;
+
+if(localStorage.getItem('registerUser'))
+  isAuthenticated = true;
+ else
+  isAuthenticated= false;
+ if(isAuthenticated) 
+ {
+  next(); // allow to enter route
+ } 
+ else
+ {
+  next('/login'); // go to '/login';
+ }
+}
 
 // function isLoggedIn() {
 //   return localStorage.getItem("registerUser");
