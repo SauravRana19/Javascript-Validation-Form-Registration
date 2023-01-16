@@ -16,7 +16,7 @@
                 style="width: 150px"
               />
               <h2>Welcome</h2>
-              <h5 style="font-size: 1.2vw">{{ data.name }}</h5>
+              <h5 style="font-size: 2vw">{{ data.FullName }}</h5>
             </div>
           </div>
         </div>
@@ -131,11 +131,12 @@ export default {
       })
         .then((res) => {
           if (res.ok) {
-            alert("Delete successfully");
+            // alert("Delete successfully");
             // prompt("Are you sure you want to delete")
-            // confirm("Are you sure you want to delete");
+            confirm("Are you sure you want to delete");
             console.log("DELETE Request Successful");
-            window.location.reload();
+            // window.location.reload();
+            this.$router.push({ name: "dash-board" });
           } else {
             console.log("DELETE  Request Failed");
           }

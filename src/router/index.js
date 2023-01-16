@@ -112,16 +112,17 @@ function guardMyroute(to, from, next)
  var isAuthenticated= false;
 
 if(localStorage.getItem('registerUser'))
+  
   isAuthenticated = true;
  else
   isAuthenticated= false;
  if(isAuthenticated) 
  {
-  next(); // allow to enter route
+  next();
  } 
  else
  {
-  next('/login'); // go to '/login';
+  next('/login'); 
  }
 }
 

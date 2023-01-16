@@ -8,19 +8,16 @@
       <div class="container">
         <table class="table">
           <thead class="thead-dark">
-            <th>Name</th>
-            <th>Lastname</th>
+            <th>Name</th> 
             <th>Email</th>
             <th>Password</th>
             <tr v-for="item in data" v-bind:key="item.id">
-              <td>{{ item.firstName }}</td>
-              <td>{{ item.lastName }}</td>
+              <td>{{ item.firstName }}</td> 
               <td>{{ item.email }}</td>
               <td>{{ item.password }}</td>
             </tr>
             <tr v-for="index in userdata" v-bind:key="index.id">
-              <td>{{ index.id }}</td>
-              <td>{{ index.Fullname }}</td>
+              <td>{{ index.FullName}}</td>
               <td>{{ index.email }}</td>
               <td>{{ index.number }}</td>
             </tr>
@@ -49,7 +46,6 @@ export default {
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
           console.log("response", response.data);
-          // this.userdata = response.data;
           this.userdata = response.data;
           console.log(this.userdata);
         });
