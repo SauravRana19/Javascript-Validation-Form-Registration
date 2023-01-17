@@ -15,90 +15,90 @@ const routes = [
     path: "/",
     name: "Ho-me",
     component: home,
-    beforeEnter : guardMyroute,
-    // meta: {
-    //   auth: false,
-    // },
+    // beforeEnter : guardMyroute,
+    meta: {
+      auth: false,
+    },
   },
   {
     path: "/register",
     name: "Register",
     component: register,
     // beforeEnter : guardMyroute,
-    // meta: {
-    //   auth: false,
-    // },
+    meta: {
+      auth: false,
+    },
   },
   {
     path: "/login",
     name: "login",
     component: login,
-    // meta: {
-    //   auth: true,
-    // },
+    meta: {
+      auth: false,
+    },
   },
   {
     path: "/dashboard",
     name: "dash-board",
     component: dasbord,
-    beforeEnter : guardMyroute,
-    // meta: {
-    //   auth: true,
-    // },
+    // beforeEnter : guardMyroute,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/userdata/:id",
     name: "userdata",
     component: userdata,
-    beforeEnter : guardMyroute,
-    // meta: {
-    //   auth: true,
-    // },
+    // beforeEnter : guardMyroute,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/header",
     name: "hea-der",
     component: header,
-    beforeEnter : guardMyroute,
-    // meta: {
-    //   auth: false,
-    // },
+    // beforeEnter : guardMyroute,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/userProfile",
     name: "user-profile",
     component: userProfile,
-    beforeEnter : guardMyroute,
-    // meta: {
-    //   auth: false,
-    // },
+    // beforeEnter : guardMyroute,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/userform",
     name: "user-form",
     component: userform,
-    beforeEnter : guardMyroute,
-    // meta: {
-    //   auth: true,
-    // },
+    // beforeEnter : guardMyroute,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/newuser",
     name: "new-user",
     component: newuser,
-    beforeEnter : guardMyroute,
-    // meta: {
-    //   auth: true,
-    // },
+    // beforeEnter : guardMyroute,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/useredit/:id",
     name: "user-edit",
     component: useredit,
-    beforeEnter : guardMyroute,
-    // meta: {
-    //   auth: true,
-    // }
+    // beforeEnter : guardMyroute,
+    meta: {
+      auth: true,
+    }
   },
 ];
 
@@ -107,55 +107,55 @@ const router = createRouter({
   routes,
 });
 
-function guardMyroute(to, from, next)
-{
- var isAuthenticated= false;
+// function guardMyroute(to, from, next)
+// {
+//  var isAuthenticated= false;
 
-if(localStorage.getItem('registerUser'))
+// if(localStorage.getItem('registerUser'))
   
-  isAuthenticated = true;
- else
-  isAuthenticated= false;
- if(isAuthenticated) 
- {
-  next();
- } 
- else
- {
-  next('/login'); 
- }
-}
-
-// function isLoggedIn() {
-//   return localStorage.getItem("registerUser");
+//   isAuthenticated = true;
+//  else
+//   isAuthenticated= false;
+//  if(isAuthenticated) 
+//  {
+//   next();
+//  } 
+//  else
+//  {
+//   next('/login'); 
+//  }
 // }
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.auth)) {
-//     if (!isLoggedIn()) {
-//       next({
-//         name: "login",
-//         query: { redirect: to.fullPath },
+function isLoggedIn() {
+  return localStorage.getItem("registerUser");
+}
 
-//       });
-//     } else {
-//       next();
-//     }
-//   } else {
-//     if (isLoggedIn()) {
-//       if(to.name!="login"){
-//         next({
-//           name: "user-profile",
-//           query: { redirect: to.fullPath },
-//         });
-//       }else{
-//         next({
-//           name: "user-profile",
-//         });
-//       }
-//     }else{
-//       next();
-//     }
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.auth)) {
+    if (!isLoggedIn()) {
+      next({
+        name: "login",
+        query: { redirect: to.fullPath },
+
+      });
+    } else {
+      next();
+    }
+  } else {
+    if (isLoggedIn()) {
+      if(to.name!="login"){
+        next({
+          name: "dash-board",
+          query: { redirect: to.fullPath },
+        });
+      }else{
+        next({
+          name: "dash-board",
+        });
+      }
+    }else{
+      next();
+    }
+  }
+})
 export default router;

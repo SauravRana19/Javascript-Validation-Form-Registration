@@ -5,15 +5,10 @@
       <form @submit.prevent="signIn()">
         <!-- Email -->
         <div
-          class="form-group"
-          :class="{ error: v$.form.email.$errors.length }"
-        >
+          class="form-group" :class="{ error: v$.form.email.$errors.length }"  >
           <label for="">Email</label>
-          <input
-            class="form-controls"
-            placeholder="Enter your username"
-            type="email"
-            v-model="v$.form.email.$model"
+          <input class="form-controls" placeholder="Enter your username" type="email"
+             v-model="v$.form.email.$model"
           />
           <div class="pre-icon os-icon os-icon-user-male-circle"></div>
           <!-- error message -->

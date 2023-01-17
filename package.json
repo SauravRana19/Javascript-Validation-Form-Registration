@@ -20,7 +20,8 @@
     "core-js": "^3.8.3",
     "fontawesome": "^5.6.3",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vuelidate": "^0.7.7"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

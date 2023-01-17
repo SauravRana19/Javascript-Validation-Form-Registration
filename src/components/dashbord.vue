@@ -2,8 +2,8 @@
   <section
     style="
       margin-top: 15%;
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
-      width: 40rem;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      width: auto;
     "
   >
     <div><headers></headers></div>
@@ -25,24 +25,27 @@
             <td @click="DiscUser(item.id)">{{ item.email }}</td>
             <td>{{ item.number }}</td>
             <td>
-              <button @click="editUser(item.id)" type="button" class="btn btn-warning">
+              <button
+                @click="editUser(item.id)"
+                type="button"
+                class="btn btn-warning"
+              >
                 Edit
               </button>
             </td>
             <td>
-              <button @click="Dell()" type="button" class="btn btn-danger">
+              <button
+                @click="Dell(item.id)"
+                type="button"
+                class="btn btn-danger"
+              >
                 Delete
               </button>
             </td>
           </tr>
         </thead>
       </table>
-      <button
-        style="margin-left: 15rem"
-        type="button"
-        class="btn btn-success"
-        @click="Add()"
-      >
+      <button style="margin-left: 74%;" type="button" class="btn btn-success" @click="Add()">
         Add New User
       </button>
     </div>
@@ -59,8 +62,8 @@ export default {
   data() {
     return {
       post: [],
-      id: this.key,
-      // id: this.$route.params.id,
+      // id: this.key,
+      id: this.$route.params.id,
     };
   },
   methods: {
@@ -87,20 +90,20 @@ export default {
     },
 
     Dell(recordId) {
-      this.$router.push({ params: { id: recordId } });
-      fetch("https://api-generator.retool.com/jJl7vj/data/" + this.id, {
+      confirm("Are you sure you want to delete");   
+      fetch("https://api-generator.retool.com/jJl7vj/data/" + recordId, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
+       
       })
         .then((res) => {
           if (res.ok) {
-            alert("Delete successfully");
             // prompt("Are you sure you want to delete")
-            // confirm("Are you sure you want to delete");
+           
             console.log("DELETE Request Successful");
-            window.location.reload();
+            location.reload()
             this.$router.push({ name: "dash-board" });
           } else {
             console.log("DELETE  Request Failed");

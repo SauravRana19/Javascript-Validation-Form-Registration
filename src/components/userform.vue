@@ -1,6 +1,7 @@
 <template>
   <div class="RegisterD">
     <h1>user Form</h1>
+    <h1>{{data.FullName}}</h1>
     <form @submit.prevent>
       <div class="form-group">
         <label for=""> FullName:</label
@@ -38,17 +39,21 @@
   </div>
 </template>
 <script>
+
 export default {
   name: "user-form",
   data() {
     return {
       post: [],
+      data:[],
       FullName: "",
       Email: "",
       number: "",
+      id:this.$route.params.id,
     };
   },
   methods: {
+    
     Adddata() {
       fetch(" https://api-generator.retool.com/jJl7vj/data", {
         method: "POST",
@@ -68,13 +73,17 @@ export default {
           console.log(data);
           this.post = data;
         });
-      alert("user Added");
-      this.$router.push("/newuser");
+      alert("user Added")
+      
+      this.$router.push({name: "dash-board"});
+     
+      
     },
     returnd(){
       this.$router.push({ name: "dash-board" });
     }
   },
+  
 };
 </script>
 <style></style>
