@@ -59,6 +59,7 @@ export default {
     home() {
       
       this.$router.push({ name: "dash-board" });
+      alert(" Returned to Dashboard")
   },
 }
 }

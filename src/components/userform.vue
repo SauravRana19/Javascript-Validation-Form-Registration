@@ -1,8 +1,11 @@
 <template>
-  <div class="RegisterD">
+     <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+   
+  <div class="RegisterD" style="margin-top: 20%;">
     <h1>user Form</h1>
-    <h1>{{data.FullName}}</h1>
-    <form @submit.prevent>
+    <form >
       <div class="form-group">
         <label for=""> FullName:</label
         ><input
@@ -10,8 +13,18 @@
           placeholder="Enter first name"
           type="text"
           v-model="FullName"
+          @keyup="register"
         />
         <!-- Error Message -->
+        <p v-if="error.length">
+            <ul>
+              <li v-for =" e in error" v-bind:key="e.id"> 
+                {{e.namereq}} 
+               {{ e.nameValid }}         
+              </li>
+            </ul>
+          </p>
+          
       </div>
       <div class="form-group">
         <label for=""> Email:</label
@@ -20,8 +33,18 @@
           placeholder="Enter first name"
           type="email"
           v-model="Email"
+          @keyup="register"
         />
         <!-- Error Message -->
+        <p v-if="error.length">
+            <ul>
+              <li v-for =" e in error" v-bind:key="e.id"> 
+                {{e.emailReqError}} 
+               {{e.emailValid}}     
+              </li>
+            </ul>
+          </p>
+
       </div>
       <div class="form-group">
         <label for=""> number:</label
@@ -30,11 +53,20 @@
           placeholder="Enter first name"
           type="number"
           v-model="number"
+          @keyup="register"
         />
         <!-- Error Message -->
+        <p v-if="error.length">
+            <ul >
+              <li v-for =" e in error" v-bind:key="e.id"> 
+                {{ e.numberValid}} 
+                {{ e.regNumber }}    
+              </li>
+            </ul>
+          </p> 
       </div>
-      <button type="button" class="btn btn-primary"  @click="Adddata()">Add</button>
-      <button type="button" class="btn btn-warning"  @click="returnd()"> Return</button>
+      <button type="button" class="btn btn-primary"  @click="register(),Adddata()"><i class="fa fa-address-book" aria-hidden="true"></i>Add</button>
+      <button type="button" class="btn btn-warning"  @click="returnd()"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Return</button>
     </form>
   </div>
 </template>
@@ -50,11 +82,21 @@ export default {
       Email: "",
       number: "",
       id:this.$route.params.id,
+
+      error:[],
+      regEmail: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      regName: /^[a-z A-Z][1,9]\d{1,5}$/,
+      regNumber:/^[0-9]\d{1,}$/,
+      
     };
   },
   methods: {
     
-    Adddata() {
+    Adddata(){
+      if( this.FullName == "" || this.Email == "" || this.number == ''){
+        alert("Empty Fields")
+
+      }else{ 
       fetch(" https://api-generator.retool.com/jJl7vj/data", {
         method: "POST",
         headers: {
@@ -71,17 +113,66 @@ export default {
         })
         .then((data) => {
           console.log(data);
-          this.post = data;
+          this.post = data;       
         });
-      alert("user Added")
+        alert("user Added")
+        this.$router.push({name: "dash-board"}); 
+      }   
+       
       
-      this.$router.push({name: "dash-board"});
      
       
     },
     returnd(){
       this.$router.push({ name: "dash-board" });
-    }
+    },
+    register()
+    {
+  
+     this.error=[];
+     if(this.FullName && this.regName.test(!this.FullName) && this.Email && this.regEmail.test(this.Email) && this.number && this.regNumber.test(this.number))
+     {
+      console.warn("no error")
+      
+
+      // return true
+      }
+      if(!this.FullName)
+      {
+        this.error.push({
+          namereq:"Name is required"});
+      }
+      else if 
+      (this.regName.test(this.FullName)){
+          this.error.push({
+            nameValid: "Please enter alphabets only"});
+          }
+     if(!this.Email)
+      {
+        this.error.push({
+          emailReqError: "Email is required"
+        });
+      }
+      else if 
+        (!this.regEmail.test(this.Email)){
+          this.error.push({
+            emailValid: "Email is not valid"});
+      
+      }
+      if(!this.number){
+     this.error.push({
+      numberValid: "Number is required"
+     });
+      }
+      else if(!this.regNumber.test(this.number)){
+          this.error.push({
+            numberValid: "Please enter number only"});
+          }
+          
+      console.warn("Hello",this.error);
+    
+     
+    },
   },
   
 };

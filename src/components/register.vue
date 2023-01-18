@@ -1,4 +1,8 @@
 <template>
+     <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+
   <div class="RegisterD">
     <div class="header">
       <h1>Register form</h1>
@@ -205,7 +209,7 @@ export default {
   background: linear-gradient(
     90deg,
     rgb(241, 235, 240) 13%,
-    rgb(158, 155, 221) 100%
+    rgb(195, 221, 155) 100%
   );
   border-radius: 15px;
   width: 29em;

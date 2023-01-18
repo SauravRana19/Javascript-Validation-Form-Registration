@@ -1,7 +1,11 @@
 <template>
-  <div class="data">
-    <h2 style="margin-left: 8em">Welcome Admin</h2>
-    <h1 style="margin-left: 9.5em; font-size: 2.2vw">All Users info</h1>
+     <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    
+  <div class="RegisterD" style="width: auto;">
+   
+    <h1 >All Users info</h1>
 
     <div>
       <headers />

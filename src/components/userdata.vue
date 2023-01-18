@@ -1,4 +1,8 @@
 <template>
+     <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+
   <section
     class="rounded"
     style="background-color: #eee; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px"
@@ -65,7 +69,7 @@
               type="button"
               class="btn btn-success"
               @click="editUser()"
-            >
+            ><i class="fa fa-pencil" aria-hidden="true"></i>
               Edit User
             </button>
             <button
@@ -73,7 +77,7 @@
               type="button"
               class="btn btn-danger"
               @click="Dell()"
-            >
+            ><i class="fa fa-close"></i>
               Delete user
             </button>
 
@@ -82,7 +86,7 @@
               type="button"
               class="btn btn-secondary"
               @click="returnUser()"
-            >
+            > <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
               Return
             </button>
             </div>
@@ -148,7 +152,9 @@ export default {
       this.$router.push({ name: "user-edit" });
     },
     returnUser() {
+      
       this.$router.push({ name: "dash-board" });
+      alert("Returned")
     },
   },
   mounted() {

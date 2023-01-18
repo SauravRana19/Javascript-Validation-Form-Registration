@@ -1,35 +1,38 @@
 <template>
+     <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+
   <section
     style="
-      margin-top: 15%;
+      margin-top: 1%;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       width: auto;
     "
   >
     <div><headers></headers></div>
     <div class="tables">
-      <table class="table">
+      <table class="table table-hover">
         <thead class="thead-dark">
-          <th>Id</th>
+          <th >Id</th>
           <th>Name</th>
           <th>Email</th>
           <th>Number</th>
 
           <tr v-for="item in post" v-bind:key="item.id">
             <td>{{ item.id }}</td>
-            <a href="#"
-              ><td @click="DiscUser(item.id)">
-                {{ item.FullName }}
-              </td></a
-            >
+            <td @click="DiscUser(item.id)">
+              <a href="#">{{ item.FullName }} </a>
+            </td>
             <td @click="DiscUser(item.id)">{{ item.email }}</td>
             <td>{{ item.number }}</td>
             <td>
               <button
                 @click="editUser(item.id)"
                 type="button"
-                class="btn btn-warning"
+                class="btn btn-warning btn-sm"
               >
+              <i class="fa fa-pencil" aria-hidden="true"></i>
                 Edit
               </button>
             </td>
@@ -37,17 +40,21 @@
               <button
                 @click="Dell(item.id)"
                 type="button"
-                class="btn btn-danger"
-              >
+                class="btn btn-danger btn-sm"
+                
+                
+              ><i class="fa fa-close"></i>
                 Delete
               </button>
             </td>
           </tr>
         </thead>
       </table>
-      <button style="margin-left: 74%;" type="button" class="btn btn-success" @click="Add()">
-        Add New User
-      </button>
+      <div class="align-right">
+        <button type="button" class="btn btn-success" @click="Add()">
+          <i class="fa fa-address-book" aria-hidden="true"></i>Add New User
+        </button>
+        </div>
     </div>
   </section>
 </template>
@@ -90,29 +97,28 @@ export default {
     },
 
     Dell(recordId) {
-      if(confirm("Are you sure you want to delete")){   
-      fetch("https://api-generator.retool.com/jJl7vj/data/" + recordId, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-       
-      })
-        .then((res) => {
-          if (res.ok) {
-            // prompt("Are you sure you want to delete")
-           
-            console.log("DELETE Request Successful");
-            location.reload()
-            this.$router.push({ name: "dash-board" });
-          } else {
-            console.log("DELETE  Request Failed");
-          }
-          return res;
+      if (confirm("Are you sure you want to delete")) {
+        fetch("https://api-generator.retool.com/jJl7vj/data/" + recordId, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
-        .then((res) => console.log(res));
-    }
-  },
+          .then((res) => {
+            if (res.ok) {
+              // prompt("Are you sure you want to delete")
+
+              console.log("DELETE Request Successful");
+              location.reload();
+              this.$router.push({ name: "dash-board" });
+            } else {
+              console.log("DELETE  Request Failed");
+            }
+            return res;
+          })
+          .then((res) => console.log(res));
+      }
+    },
     editUser(recordId) {
       this.$router.push({
         name: "user-edit",
@@ -121,13 +127,20 @@ export default {
         },
       });
     },
+    
+    
   },
   mounted() {
     this.getdata();
+    
   },
 };
 </script>
+
 <style>
+td a {
+  text-decoration: none;
+}
 .tables {
   /* margin-top: 20px; */
   border-radius: 0 0 10px 10px;
@@ -173,4 +186,8 @@ span {
   background: #3cb0fd;
   text-decoration: none;
 }
+.align-right {
+        text-align: right;
+       
+      }
 </style>

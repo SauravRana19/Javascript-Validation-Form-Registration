@@ -1,7 +1,11 @@
 <template>
-  <div class="RegisterD">
+     <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+  
+  <div class="RegisterD" style="margin-top: 20%;">
     <h1>Edit UserData</h1>
-    <form @submit.prevent="register()">
+    <form >
       <div class="form-group">
         <label for=""> FullName:</label
         ><input
@@ -67,10 +71,10 @@
        
       </div>
       <button type="button" class="btn btn-warning" @click="Update(),register()">
-        Update
+        <i class="fa fa-pencil" aria-hidden="true"></i>Update
       </button>
       <button type="button" class="btn btn-success" @click="back()">
-        Return
+        <i class="fa fa-long-arrow-left" aria-hidden="true"></i> Return
       </button>
     </form>
   </div>
@@ -82,10 +86,13 @@ export default {
   name: "user-edit",
   data() {
     return {
+
+      // regex for name with max lenght ?
+
       error:[],
       regEmail: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      regName: /^[a-z A-Z][1,9]$/,
-      regNumber:/^[0-9]\d{9}$/,
+      regName:  /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
+      regNumber:/^[0-9]\d{5,}$/,
       
         id: this.$route.params.id,
       data: {
@@ -93,7 +100,7 @@ export default {
         email: "",
         number: "",    
       },
-      
+      //what is regex for name?
     };
   },
   methods: {
@@ -119,7 +126,10 @@ export default {
       // //   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       // var regnumb = /^[0-9]\d{9}$/;
 
-
+      if( this.data.FullName == '' || this.data.email == '' || this.data.number == ''){
+        alert("Empty Field")
+      }
+      else{
         fetch("https://api-generator.retool.com/jJl7vj/data/" + this.id, {
           method: "PUT",
           headers: {
@@ -144,9 +154,9 @@ export default {
           .then((res) => res.json())
           .then((data) => console.log(data))
           .catch((err) => console.log(err));
-      },
-
-      register(e)
+      }
+    },
+      register()
     {
   
      this.error=[];
@@ -189,7 +199,7 @@ export default {
             numberValid: "Please enter number only"});
           }
       console.warn("Hello",this.error);
-      e.preventDefault();
+    
      
     },
     back() {
@@ -212,4 +222,7 @@ ul{
   font-size: large;
   margin-left: -30px;
 }
+
+
+
 </style>
