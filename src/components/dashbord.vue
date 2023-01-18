@@ -90,7 +90,7 @@ export default {
     },
 
     Dell(recordId) {
-      confirm("Are you sure you want to delete");   
+      if(confirm("Are you sure you want to delete")){   
       fetch("https://api-generator.retool.com/jJl7vj/data/" + recordId, {
         method: "DELETE",
         headers: {
@@ -111,7 +111,8 @@ export default {
           return res;
         })
         .then((res) => console.log(res));
-    },
+    }
+  },
     editUser(recordId) {
       this.$router.push({
         name: "user-edit",

@@ -25,8 +25,8 @@
                   class="rounded-circle"
                 />
               </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li @click="alluser()">
+              <ul  class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li  @click="alluser()">
                   <a class="dropdown-item" href="#">All Users info </a>
                 </li>
                 <li @click="home()"><a class="dropdown-item" href="#"> Dashboard</a></li>
@@ -63,4 +63,6 @@ export default {
 }
 }
 </script>
-<style></style>
+<style>
+
+</style>

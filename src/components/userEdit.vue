@@ -9,7 +9,7 @@
           placeholder="Enter Full Name"
           type="text"
           v-model="data.FullName"
-          @blur="register"
+          @keyup="register"
         />
         <!-- Error Message -->
        
@@ -30,7 +30,7 @@
           placeholder="Enter Email"
           type="email"
           v-model="data.email"
-          @blur="register"
+          @keyup="register"
         />
         <!-- Error Message -->
         
@@ -52,12 +52,12 @@
           placeholder="Enter Number"
           type="number"
           v-model="data.number"
-          @blur="register"
+          @keyup="register"
         />
         <!-- Error Message -->
         
           <p v-if="error.length">
-            <ul>
+            <ul >
               <li v-for =" e in error" v-bind:key="e.id"> 
                 {{ e.numberValid}} 
                 {{ e.regNumber }}    
@@ -84,8 +84,8 @@ export default {
     return {
       error:[],
       regEmail: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      regName: /[^a-zA-Z]/,
-      regNumber:/^[789]\d{9}$/,
+      regName: /^[a-z A-Z][1,9]$/,
+      regNumber:/^[0-9]\d{9}$/,
       
         id: this.$route.params.id,
       data: {
@@ -101,7 +101,7 @@ export default {
       axios
         .get(
           " https://api-generator.retool.com/jJl7vj/data/" +
-            this.$route.params.id
+            this.id
         )
         .then((response) => {
           console.log(response.data);
@@ -150,41 +150,41 @@ export default {
     {
   
      this.error=[];
-     if(this.FullName && this.regName.test(!this.FullName) && this.email && this.regEmail.test(this.email) && this.number && this.regNumber.test(this.number))
+     if(this.data.FullName && this.regName.test(!this.data.FullName) && this.data.email && this.regEmail.test(this.data.email) && this.data.number && this.regNumber.test(this.data.number))
      {
       console.warn("no error")
       
 
       // return true
       }
-      if(!this.FullName)
+      if(!this.data.FullName)
       {
         this.error.push({
           namereq:"Name is required"});
       }
       else if 
-      (this.regName.test(this.FullName)){
+      (this.regName.test(this.data.FullName)){
           this.error.push({
             nameValid: "Please enter alphabets only"});
           }
-     if(!this.email)
+     if(!this.data.email)
       {
         this.error.push({
           emailReqError: "Email is required"
         });
       }
       else if 
-        (!this.regEmail.test(this.email)){
+        (!this.regEmail.test(this.data.email)){
           this.error.push({
             emailValid: "Email is not valid"});
       
       }
-      if(!this.number){
+      if(!this.data.number){
      this.error.push({
       numberValid: "Number is required"
      });
       }
-      else if(!this.regNumber.test(this.number)){
+      else if(!this.regNumber.test(this.data.number)){
           this.error.push({
             numberValid: "Please enter number only"});
           }
@@ -192,12 +192,8 @@ export default {
       e.preventDefault();
      
     },
-    returnPage() {
-      console.log("ddjs");
-      this.$router.go(-1);
-    },
     back() {
-      this.$router.push({ name: "userdata" });
+      this.$router.push({ name: "dash-board" });
     },
   },
   mounted() {
@@ -206,4 +202,14 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+li {
+  list-style: none;
+}
+ul{
+  color: red;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: large;
+  margin-left: -30px;
+}
+</style>
