@@ -1,7 +1,7 @@
 <template>
-     <div class="bg"></div>
-    <div class="bg bg2"></div>
-    <div class="bg bg3"></div>
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
 
   <section
     class="rounded"
@@ -62,33 +62,36 @@
                   <p class="text-muted mb-0 capitalize">{{ data.number }}</p>
                 </div>
               </div>
-              
+
               <hr />
               <button
-              style="width: 10rem;margin-left: 35%;"
-              type="button"
-              class="btn btn-success"
-              @click="editUser()"
-            ><i class="fa fa-pencil" aria-hidden="true"></i>
-              Edit User
-            </button>
-            <button
-              style="width: 10rem;margin-left: 35%;margin-top: 5px;"
-              type="button"
-              class="btn btn-danger"
-              @click="Dell()"
-            ><i class="fa fa-close"></i>
-              Delete user
-            </button>
+                style="width: 10rem; margin-left: 35%"
+                type="button"
+                class="btn btn-success"
+                @click="editUser()"
+              >
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                Edit User
+              </button>
+              <button
+                style="width: 10rem; margin-left: 35%; margin-top: 5px"
+                type="button"
+                class="btn btn-danger"
+                @click="Dell()"
+              >
+                <i class="fa fa-close"></i>
+                Delete user
+              </button>
 
-            <button
-              style="width: 10rem;margin-left: 35%;margin-top: 5px;"
-              type="button"
-              class="btn btn-secondary"
-              @click="returnUser()"
-            > <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-              Return
-            </button>
+              <button
+                style="width: 10rem; margin-left: 35%; margin-top: 5px"
+                type="button"
+                class="btn btn-secondary"
+                @click="returnUser()"
+              >
+                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                Return
+              </button>
             </div>
           </div>
         </div>
@@ -98,6 +101,7 @@
 </template>
 <Router-View></Router-View>
 <script>
+import swal from "sweetalert2";
 import axios from "axios";
 import headers from "@/components/header.vue";
 export default {
@@ -127,40 +131,67 @@ export default {
         });
     },
     Dell() {
-      fetch("https://api-generator.retool.com/jJl7vj/data/" + this.id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            // alert("Delete successfully");
-            // prompt("Are you sure you want to delete")
-            confirm("Are you sure you want to delete");
-            console.log("DELETE Request Successful");
-            // window.location.reload();
-            this.$router.push({ name: "dash-board" });
-          } else {
-            console.log("DELETE  Request Failed");
-          }
-          return res;
+      swal
+        .fire({
+          html: "Are you sure want to delete",
+          showCloseButton: true,
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText: "Delete",
+
+          cancelButtonText: "Cancel",
         })
-        .then((res) => console.log(res));
+        .then((response) => {
+          if (response.isConfirmed) {
+            fetch("https://api-generator.retool.com/jJl7vj/data/" + this.id, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+              .then((res) => {
+                if (res.ok) {
+                  // alert("Delete successfully");
+                  // prompt("Are you sure you want to delete")
+
+                  // alert("DELETE Request Successful");
+                  swal.fire({ html: "Deleted! success" });
+                    
+                  // window.location.reload();
+                  this.$router.push({ name: "dash-board" });
+                } else {
+                  alert("DELETE  Request Failed");
+                }
+                return res;
+              })
+              .then((res) => console.log(res));
+
+            
+          }
+        });
+      // if (confirm("Are you sure you want to delete")) {
+      //   fetch("https://api-generator.retool.com/jJl7vj/data/" + this.id, {
+      //     method: "DELETE",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   })
     },
     editUser() {
       this.$router.push({ name: "user-edit" });
     },
     returnUser() {
-      
+      swal.fire({ html: "Previous Page" });
       this.$router.push({ name: "dash-board" });
-      alert("Returned")
+      
     },
+
+    
   },
   mounted() {
-    this.getdata();
-    console.log(this.id);
-  },
+      this.getdata();
+      console.log(this.id);
+    },
 };
 </script>
 <style>

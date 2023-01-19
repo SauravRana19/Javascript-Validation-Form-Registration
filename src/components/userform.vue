@@ -30,7 +30,7 @@
         <label for=""> Email:</label
         ><input
           class="form-control"
-          placeholder="Enter first name"
+          placeholder="Enter Email"
           type="email"
           v-model="Email"
           @keyup="register"
@@ -47,11 +47,11 @@
 
       </div>
       <div class="form-group">
-        <label for=""> number:</label
+        <label for=""> Password:</label
         ><input
           class="form-control"
-          placeholder="Enter first name"
-          type="number"
+          placeholder="Enter password"
+          type="password"
           v-model="number"
           @keyup="register"
         />
@@ -71,9 +71,10 @@
   </div>
 </template>
 <script>
-
+import swal  from "sweetalert2";
 export default {
   name: "user-form",
+  
   data() {
     return {
       post: [],
@@ -86,7 +87,7 @@ export default {
       error:[],
       regEmail: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       regName: /^[a-z A-Z][1,9]\d{1,5}$/,
-      regNumber:/^[0-9]\d{1,}$/,
+      regNumber:/^[a-z A-Z]$/,
       
     };
   },
@@ -125,6 +126,7 @@ export default {
     },
     returnd(){
       this.$router.push({ name: "dash-board" });
+      swal.fire({ html: "previous Page" });
     },
     register()
     {
@@ -161,12 +163,12 @@ export default {
       }
       if(!this.number){
      this.error.push({
-      numberValid: "Number is required"
+      numberValid: "password is required"
      });
       }
       else if(!this.regNumber.test(this.number)){
           this.error.push({
-            numberValid: "Please enter number only"});
+            numberValid: "Please Password only"});
           }
           
       console.warn("Hello",this.error);

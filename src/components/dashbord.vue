@@ -1,23 +1,17 @@
 <template>
-     <div class="bg"></div>
-    <div class="bg bg2"></div>
-    <div class="bg bg3"></div>
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
 
-  <section
-    style="
-      margin-top: 1%;
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-      width: auto;
-    "
-  >
+  <section style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: auto;margin-top: 10%;">
     <div><headers></headers></div>
     <div class="tables">
       <table class="table table-hover">
         <thead class="thead-dark">
-          <th >Id</th>
+          <th>Id</th>
           <th>Name</th>
           <th>Email</th>
-          <th>Number</th>
+          <th>Password</th>
 
           <tr v-for="item in post" v-bind:key="item.id">
             <td>{{ item.id }}</td>
@@ -32,7 +26,7 @@
                 type="button"
                 class="btn btn-warning btn-sm"
               >
-              <i class="fa fa-pencil" aria-hidden="true"></i>
+                <i class="fa fa-pencil" aria-hidden="true"></i>
                 Edit
               </button>
             </td>
@@ -41,9 +35,8 @@
                 @click="Dell(item.id)"
                 type="button"
                 class="btn btn-danger btn-sm"
-                
-                
-              ><i class="fa fa-close"></i>
+              >
+                <i class="fa fa-close"></i>
                 Delete
               </button>
             </td>
@@ -54,13 +47,15 @@
         <button type="button" class="btn btn-success" @click="Add()">
           <i class="fa fa-address-book" aria-hidden="true"></i>Add New User
         </button>
-        </div>
+      </div>
     </div>
   </section>
 </template>
 <Router-view></Router-view>
 <script>
 import axios from "axios";
+import swal from "sweetalert2";
+// import { inject } from 'vue'
 import headers from "@/components/header.vue";
 
 export default {
@@ -97,27 +92,30 @@ export default {
     },
 
     Dell(recordId) {
-      if (confirm("Are you sure you want to delete")) {
-        fetch("https://api-generator.retool.com/jJl7vj/data/" + recordId, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((res) => {
-            if (res.ok) {
-              // prompt("Are you sure you want to delete")
+      swal
+        .fire({
+          html: "Are you sure want to delete",
+          showCloseButton: true,
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText: "Delete",
 
-              console.log("DELETE Request Successful");
-              location.reload();
-              this.$router.push({ name: "dash-board" });
-            } else {
-              console.log("DELETE  Request Failed");
-            }
-            return res;
-          })
-          .then((res) => console.log(res));
-      }
+          cancelButtonText: "Cancel",
+        })
+        .then((response) => {
+          if (response.isConfirmed) {
+            fetch("https://api-generator.retool.com/jJl7vj/data/" + recordId, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            
+            swal.fire({ html: "Deleted! success" });
+            history.go()
+            
+          }
+        });
     },
     editUser(recordId) {
       this.$router.push({
@@ -127,12 +125,9 @@ export default {
         },
       });
     },
-    
-    
   },
   mounted() {
     this.getdata();
-    
   },
 };
 </script>
@@ -187,7 +182,6 @@ span {
   text-decoration: none;
 }
 .align-right {
-        text-align: right;
-       
-      }
+  text-align: right;
+}
 </style>

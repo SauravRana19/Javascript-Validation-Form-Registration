@@ -42,6 +42,7 @@
   </header>
 </template>
 <script>
+import swal  from "sweetalert2";
 export default {
   name: "hea-der",
   data() {
@@ -50,16 +51,17 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("registerUser");
-      window.alert("logout succesfuly succeeded");
+      swal.fire({ html: "User Logout" });
       this.$router.push({ name: "login" });
     },
     alluser() {
+      swal.fire({ html: "All User Data" });
       this.$router.push({ name: "user-profile" });
     },
     home() {
-      
+      swal.fire({ html: "Dashboard" });
       this.$router.push({ name: "dash-board" });
-      alert(" Returned to Dashboard")
+      
   },
 }
 }

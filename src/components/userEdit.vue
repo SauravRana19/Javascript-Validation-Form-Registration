@@ -50,11 +50,11 @@
 
       </div>
       <div class="form-group">
-        <label for=""> number:</label
+        <label for=""> Password:</label
         ><input
           class="form-control"
-          placeholder="Enter Number"
-          type="number"
+          placeholder="Enter Password"
+          type="password"
           v-model="data.number"
           @keyup="register"
         />
@@ -81,6 +81,7 @@
   <div></div>
 </template>
 <script>
+import swal from "sweetalert2";
 import axios from "axios";
 export default {
   name: "user-edit",
@@ -92,7 +93,7 @@ export default {
       error:[],
       regEmail: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       regName:  /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
-      regNumber:/^[0-9]\d{5,}$/,
+      regNumber: /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
       
         id: this.$route.params.id,
       data: {
@@ -160,7 +161,9 @@ export default {
     {
   
      this.error=[];
-     if(this.data.FullName && this.regName.test(!this.data.FullName) && this.data.email && this.regEmail.test(this.data.email) && this.data.number && this.regNumber.test(this.data.number))
+     if(this.data.FullName && this.regName.test(!this.data.FullName)
+      && this.data.email && this.regEmail.test(this.data.email)
+       && this.data.number && this.regNumber.test(this.data.number))
      {
       console.warn("no error")
       
@@ -191,18 +194,19 @@ export default {
       }
       if(!this.data.number){
      this.error.push({
-      numberValid: "Number is required"
+      numberValid: "password is required"
      });
       }
       else if(!this.regNumber.test(this.data.number)){
           this.error.push({
-            numberValid: "Please enter number only"});
+            numberValid: "Please enter password only"});
           }
       console.warn("Hello",this.error);
     
      
     },
     back() {
+      swal.fire({html:"Previous Page",});
       this.$router.push({ name: "dash-board" });
     },
   },
