@@ -19,7 +19,7 @@
               <a href="#">{{ item.FullName }} </a>
             </td>
             <td @click="DiscUser(item.id)">{{ item.email }}</td>
-            <td>{{ item.number }}</td>
+            <td id="dec" @click="decrypt()">{{ item.number }}</td>
             <td>
               <button
                 @click="editUser(item.id)"
@@ -125,9 +125,15 @@ export default {
         },
       });
     },
+    decrypt(){
+      var a = document.getElementById("dec")
+      var b = window.btoa(a)
+      console.log(b)
+    }
   },
   mounted() {
     this.getdata();
+
   },
 };
 </script>
