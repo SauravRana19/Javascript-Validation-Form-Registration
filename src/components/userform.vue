@@ -126,7 +126,7 @@ export default {
     },
     returnd(){
       this.$router.push({ name: "dash-board" });
-      swal.fire({ html: "previous Page" });
+      swal.fire({ html: "Previous Page" });
     },
     register()
     {
