@@ -56,7 +56,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <p class="mb-0"><b>Status:</b></p>
+                  <p class="mb-0"><b>Password:</b></p>
                 </div>
                 <div class="col-sm-9">
                   <p class="text-muted mb-0 capitalize">{{ data.number }}</p>
@@ -112,7 +112,7 @@ export default {
       name: "",
       email: "",
       number: "",
-      data: "",
+      data: [],
       errormsg: "",
       id: this.$route.params.id,
     };
@@ -122,12 +122,11 @@ export default {
       axios
         .get(`https://api-generator.retool.com/jJl7vj/data/` + this.id)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           this.data = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.errormsg = "error in Data";
+          // console.log("this data",this.data)
+          this.data.number = window.atob(this.data.number);
+          
         });
     },
     Dell() {
@@ -156,7 +155,7 @@ export default {
 
                   // alert("DELETE Request Successful");
                   swal.fire({ html: "Deleted! success" });
-                    
+
                   // window.location.reload();
                   this.$router.push({ name: "dash-board" });
                 } else {
@@ -165,8 +164,6 @@ export default {
                 return res;
               })
               .then((res) => console.log(res));
-
-            
           }
         });
       // if (confirm("Are you sure you want to delete")) {
@@ -183,15 +180,12 @@ export default {
     returnUser() {
       swal.fire({ html: "Previous Page" });
       this.$router.push({ name: "dash-board" });
-      
     },
-
-    
   },
   mounted() {
-      this.getdata();
-      console.log(this.id);
-    },
+    this.getdata();
+    console.log(this.id);
+  },
 };
 </script>
 <style>

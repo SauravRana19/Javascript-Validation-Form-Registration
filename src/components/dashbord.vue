@@ -2,7 +2,13 @@
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
-  <section style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: auto;margin-top: 10%;">
+  <section
+    style="
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      width: auto;
+      margin-top: 10%;
+    "
+  >
     <div><headers></headers></div>
     <div class="tables">
       <table class="table table-hover">
@@ -17,7 +23,7 @@
               <a href="#">{{ item.FullName }} </a>
             </td>
             <td @click="DiscUser(item.id)">{{ item.email }}</td>
-            <td id="dec" @click="decrypt()">{{ item.number }}</td>
+            <td>{{ item.number }}</td>
             <td>
               <button
                 @click="editUser(item.id)"
@@ -60,9 +66,10 @@ export default {
   components: { headers },
   data() {
     return {
-      post:"",
-      // id: this.key,
+      post: [],
+      b: [],      
       id: this.$route.params.id,
+      
     };
   },
   methods: {
@@ -71,12 +78,16 @@ export default {
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
           this.post = response.data;
-          console.log(this.post);
-          this.b = this.post.number
-          this.Decrypt = window.atob(this.b)
+          // console.log(this.post);
 
-          console.log("Decrypt",this.Decrypt);
-        })
+          this.b = response.data;
+          this.b.map((data) => {
+
+            // console.log("data", data.number);
+            data.number = window.atob(data.number);
+          })
+          
+        });
     },
     DiscUser(recordId) {
       this.$router.push({
@@ -109,12 +120,10 @@ export default {
                 "Content-Type": "application/json",
               },
             }).then((response) => {
-              if(response.ok){
+              if (response.ok) {
                 swal.fire({ html: "Deleted! success" });
-          
               }
-            })
-        
+            });
           }
         });
     },
@@ -126,7 +135,6 @@ export default {
         },
       });
     },
-    
   },
   mounted() {
     this.getdata();
