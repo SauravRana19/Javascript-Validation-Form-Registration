@@ -68,6 +68,7 @@
       <button type="button" class="btn btn-primary"  @click="register(),Adddata()"><i class="fa fa-address-book" aria-hidden="true"></i>Add</button>
       <button type="button" class="btn btn-warning"  @click="returnd()"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Return</button>
     </form>
+    <button @click="encryption()">encrypt</button>
   </div>
 </template>
 <script>
@@ -89,6 +90,7 @@ export default {
       regName: /^[a-z A-Z][1,9]\d{1,5}$/,
       regNumber:/^[a-z A-Z]$/,
       
+      
     };
   },
   methods: {
@@ -98,6 +100,8 @@ export default {
         alert("Empty Fields")
 
       }else{ 
+        var a = this.number;
+       this.b = window.btoa(a);
       fetch(" https://api-generator.retool.com/jJl7vj/data", {
         method: "POST",
         headers: {
@@ -106,7 +110,7 @@ export default {
         body: JSON.stringify({
           FullName: this.FullName,
           email: this.Email,
-          number: this.number,
+          number: this.b,
         }),
       })
         .then((response) => {
@@ -171,10 +175,15 @@ export default {
             numberValid: "Please Password only"});
           }
           
-      console.warn("Hello",this.error);
+    
     
      
     },
+    // encryption(){
+    //   var a = this.number;
+    //   var b = window.btoa(a);
+      
+    // }
   },
   
 };
