@@ -2,7 +2,6 @@
      <div class="bg"></div>
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
-  
   <div class="RegisterD" style="margin-top: 20%;">
     <h1>Edit UserData</h1>
     <form >
@@ -16,7 +15,6 @@
           @keyup="register"
         />
         <!-- Error Message -->
-       
           <p v-if="error.length">
             <ul>
               <li v-for =" e in error" v-bind:key="e.id"> 
@@ -25,7 +23,6 @@
               </li>
             </ul>
           </p>         
-      
       </div>
       <div class="form-group">
         <label for=""> Email:</label
@@ -37,7 +34,6 @@
           @keyup="register"
         />
         <!-- Error Message -->
-        
           <p v-if="error.length">
             <ul>
               <li v-for =" e in error" v-bind:key="e.id"> 
@@ -46,8 +42,6 @@
               </li>
             </ul>
           </p>          
-      
-
       </div>
       <div class="form-group">
         <label for=""> Password:</label
@@ -59,7 +53,6 @@
           @keyup="register"
         />
         <!-- Error Message -->
-        
           <p v-if="error.length">
             <ul >
               <li v-for =" e in error" v-bind:key="e.id"> 
@@ -68,7 +61,6 @@
               </li>
             </ul>
           </p>          
-       
       </div>
       <button type="button" class="btn btn-warning" @click="Update(),register()">
         <i class="fa fa-pencil" aria-hidden="true"></i>Update
@@ -87,14 +79,11 @@ export default {
   name: "user-edit",
   data() {
     return {
-
       // regex for name with max lenght ?
-
       error:[],
       regEmail: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       regName:  /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
       regNumber: /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
-      
         id: this.$route.params.id,
       data: {
         FullName: "",
@@ -117,16 +106,13 @@ export default {
         });
     },
     Update() {
-     
       // var regEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/g; //Javascript reGex for Email Validation.
       // var regPhone = /^\d{10}$/; // Javascript reGex for Phone Number validation.
       // var regName = /\d+$/g;
-
       // var regname = /[^a-zA-Z]/;
       // var regemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       // //   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       // var regnumb = /^[0-9]\d{9}$/;
-
       if( this.data.FullName == '' || this.data.email == '' || this.data.number == ''){
         alert("Empty Field")
       }
@@ -148,7 +134,6 @@ export default {
             if (res.ok) {
               console.log("PUT Request Successful");
               swal.fire({html:"Updated!",});
-              
               this.$router.push({ name: "userdata" });
             } else {
               console.log("PUT Request Failed");
@@ -162,15 +147,12 @@ export default {
     },
       register()
     {
-  
      this.error=[];
      if(this.data.FullName && this.regName.test(!this.data.FullName)
       && this.data.email && this.regEmail.test(this.data.email)
        && this.data.number && this.regNumber.test(this.data.number))
      {
       console.warn("no error")
-      
-
       // return true
       }
       if(!this.data.FullName)
@@ -193,7 +175,6 @@ export default {
         (!this.regEmail.test(this.data.email)){
           this.error.push({
             emailValid: "Email is not valid"});
-      
       }
       if(!this.data.number){
      this.error.push({
@@ -204,9 +185,6 @@ export default {
           this.error.push({
             numberValid: "Please enter password only"});
           }
-      console.warn("Hello",this.error);
-    
-     
     },
     back() {
       swal.fire({html:"Previous Page",});
@@ -229,7 +207,4 @@ ul{
   font-size: large;
   margin-left: -30px;
 }
-
-
-
 </style>

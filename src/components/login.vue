@@ -2,7 +2,6 @@
    <div class="bg"></div>
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
-
   <div class="loginD">
     <div class="headers">
       <h1>Login form</h1>
@@ -24,7 +23,6 @@
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
-
         <!-- password -->
         <div
           class="form-group"
@@ -47,7 +45,6 @@
             <div class="error-msg">{{ error.$message }}</div>
           </div>
         </div>
-
         <!-- Submit Button -->
         <div>
           <button
@@ -66,13 +63,11 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-
 export default {
   name: "log-in",
   setup() {
     return { v$: useVuelidate() };
   },
-
   data() {
     return {
       users: [],
@@ -82,7 +77,6 @@ export default {
       },
     };
   },
-
   validations() {
     return {
       form: {
@@ -104,7 +98,6 @@ export default {
       const [LocalData]= tempData
       const {email, password}=LocalData
       console.log("ssssssss",email,password)
-
       if (this.form.email === email && this.form.password === password) {
         alert("Login successful")
         this.$router.push("/dashboard");
@@ -114,7 +107,6 @@ export default {
     },
     registeruser(){
       this.$router.push("/register");
-
     }
   },
 };
@@ -125,7 +117,6 @@ export default {
   text-align: center;
   margin-top: 30%;
 }
-
 .loginD {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   width: 25em;
@@ -151,12 +142,10 @@ export default {
   text-decoration: none;
   width: 100%;
 }
-
 .form-controls {
   width: 100%;
   height: 40px;
   border-radius: 10px;
-
   border: #f0f3f5;
   margin-bottom: 5px;
   position: relative;
@@ -168,15 +157,12 @@ export default {
 .error-msg {
   color: red;
 }
-
 html {
    height:100%;
  }
- 
  body {
    margin:0;
  }
- 
  .bg {
    animation:slide 3s ease-in-out infinite alternate;
    background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
@@ -188,16 +174,13 @@ html {
    top:0;
    z-index:-1;
  }
- 
  .bg2 {
    animation-direction:alternate-reverse;
    animation-duration:4s;
  }
- 
  .bg3 {
    animation-duration:5s;
  }
- 
  .content {
    background-color:rgba(255,255,255,.8);
    border-radius:.25em;
@@ -210,12 +193,10 @@ html {
    top:50%;
    transform:translate(-50%, -50%);
  }
- 
  h1 {
    font-family:monospace;
    margin-left: 20%;
  }
- 
  @keyframes slide {
    0% {
      transform:translateX(-25%);

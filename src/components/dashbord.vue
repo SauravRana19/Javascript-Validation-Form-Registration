@@ -69,7 +69,6 @@ export default {
       post: [],
       b: [],      
       id: this.$route.params.id,
-      
     };
   },
   methods: {
@@ -79,14 +78,11 @@ export default {
         .then((response) => {
           this.post = response.data;
           // console.log(this.post);
-
           this.b = response.data;
           this.b.map((data) => {
-
             // console.log("data", data.number);
             data.number = window.atob(data.number);
           })
-          
         });
     },
     DiscUser(recordId) {
@@ -138,6 +134,7 @@ export default {
   },
   mounted() {
     this.getdata();
+    // swal.fire({html:"Dashboard",});
   },
 };
 </script>

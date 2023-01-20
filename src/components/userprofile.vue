@@ -2,11 +2,8 @@
      <div class="bg"></div>
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
-    
   <div class="RegisterD" style="width: auto;">
-   
     <h1 >All Users info</h1>
-
     <div>
       <headers />
       <div class="container">
@@ -63,15 +60,12 @@ export default {
       });
     },
   },
-
   mounted() {
     this.data = localStorage.getItem("registerUser");
-
     let tempData = JSON.parse(this.data);
     // this.data.push(this.tempData);
     this.data = tempData;
     console.log(tempData);
-
     this.getData();
   },
 };

@@ -1,12 +1,10 @@
 <template>
   <header>
-    
     <nav
       class="navbar navbar-expand-lg navbar-light bg-light border border-bottom-0-dark rounded-top"
     ><h1> Dashboard</h1>
       <div class="container-fluid">
         <div class="navbar" style="margin-left: 85%">
-          
           <ul class="navbar-nav">
             <li class="nav-item dropdown">
               <a
@@ -61,11 +59,9 @@ export default {
     home() {
       swal.fire({ html: "Dashboard" });
       this.$router.push({ name: "dash-board" });
-      
   },
 }
 }
 </script>
 <style>
-
 </style>

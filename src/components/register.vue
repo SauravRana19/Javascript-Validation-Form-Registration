@@ -2,7 +2,6 @@
      <div class="bg"></div>
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
-
   <div class="RegisterD">
     <div class="header">
       <h1>Register form</h1>
@@ -26,7 +25,6 @@
           <div class="error-msg">{{ error.$message }}</div>
         </div>
       </div>
-
       <div class="form-group">
         <label for="">Last Name:</label
         ><input
@@ -44,7 +42,6 @@
           <div class="error-msg">{{ error.$message }}</div>
         </div>
       </div>
-
       <div class="form-group">
         <label for=""> Email address</label
         ><input
@@ -63,7 +60,6 @@
           <div class="error-msg">{{ error.$message }}</div>
         </div>
       </div>
-
       <div class="form-group">
         <label for=""> Password</label
         ><input
@@ -99,7 +95,6 @@
           <div class="error-msg">{{ error.$message }}</div>
         </div>
       </div>
-
       <div>
         <div>
           <button
@@ -124,12 +119,10 @@
     </form>
   </div>
 </template>
-
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, sameAs } from "@vuelidate/validators";
 import swal from "sweetalert2";
-
 export function validName(name) {
   let validNamePattern = new RegExp("^[a-zA-Z]+(?:[-'\\s][a-zA-Z]+)*$");
   if (validNamePattern.test(name)) {
@@ -137,14 +130,11 @@ export function validName(name) {
   }
   return false;
 }
-
 export default {
   name: "regis-ter",
-
   setup() {
     return { v$: useVuelidate() };
   },
-
   data() {
     return {
       data: [],
@@ -187,7 +177,6 @@ export default {
       console.log(this.form.email);
       this.data.push(this.form);
       localStorage.setItem("registerUser", JSON.stringify(this.data));
-     
       console.log(this.data);
       swal.fire({html:"User Registerd ",});
       this.$router.push({ name: "login" });
@@ -198,7 +187,6 @@ export default {
   },
 };
 </script>
-
 <style>
 .header h1 {
   margin-left: 20%;
@@ -245,7 +233,6 @@ form {
 }
 .form-control label {
   display: inline-block;
-
   font-size: 1.2vw;
 }
 .form-control input {

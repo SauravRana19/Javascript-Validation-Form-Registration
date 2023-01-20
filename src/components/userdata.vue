@@ -2,7 +2,6 @@
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
-
   <section
     class="rounded"
     style="background-color: #eee; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px"
@@ -62,7 +61,6 @@
                   <p class="text-muted mb-0 capitalize">{{ data.number }}</p>
                 </div>
               </div>
-
               <hr />
               <button
                 style="width: 10rem; margin-left: 35%"
@@ -82,7 +80,6 @@
                 <i class="fa fa-close"></i>
                 Delete user
               </button>
-
               <button
                 style="width: 10rem; margin-left: 35%; margin-top: 5px"
                 type="button"
@@ -126,7 +123,6 @@ export default {
           this.data = response.data;
           // console.log("this data",this.data)
           this.data.number = window.atob(this.data.number);
-          
         });
     },
     Dell() {
@@ -137,7 +133,6 @@ export default {
           showCancelButton: true,
           focusConfirm: false,
           confirmButtonText: "Delete",
-
           cancelButtonText: "Cancel",
         })
         .then((response) => {
@@ -152,10 +147,8 @@ export default {
                 if (res.ok) {
                   // alert("Delete successfully");
                   // prompt("Are you sure you want to delete")
-
                   // alert("DELETE Request Successful");
                   swal.fire({ html: "Deleted! success" });
-
                   // window.location.reload();
                   this.$router.push({ name: "dash-board" });
                 } else {

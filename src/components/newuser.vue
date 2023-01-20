@@ -2,7 +2,6 @@
      <div class="bg"></div>
     <div class="bg bg2"></div>
     <div class="bg bg3"></div>
-
   <div style="width: 40rem;margin-top: 10%; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
     <div><headers></headers></div>
     <div class="tables">
@@ -12,7 +11,6 @@
           <th>Name</th>
           <th>Email</th>
           <th>Number</th>
-
           <tr v-for="item in post" v-bind:key="item.id">
             <td>{{ item.id }}</td>
             <a href="#"
@@ -25,7 +23,6 @@
       </table>
       <button style="margin-left: 16rem;" type="button" class="btn btn-success" @click="retur()" > Return</button>
     </div>
-    
   </div>
 </template>
 <Router-view></Router-view>
