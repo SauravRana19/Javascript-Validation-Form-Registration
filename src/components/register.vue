@@ -128,6 +128,7 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, sameAs } from "@vuelidate/validators";
+import swal from "sweetalert2";
 
 export function validName(name) {
   let validNamePattern = new RegExp("^[a-zA-Z]+(?:[-'\\s][a-zA-Z]+)*$");
@@ -186,8 +187,9 @@ export default {
       console.log(this.form.email);
       this.data.push(this.form);
       localStorage.setItem("registerUser", JSON.stringify(this.data));
-      alert("User Registerd");
+     
       console.log(this.data);
+      swal.fire({html:"User Registerd ",});
       this.$router.push({ name: "login" });
     },
     loginUser() {

@@ -2,7 +2,6 @@
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
-
   <section style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: auto;margin-top: 10%;">
     <div><headers></headers></div>
     <div class="tables">
@@ -12,7 +11,6 @@
           <th>Name</th>
           <th>Email</th>
           <th>Password</th>
-
           <tr v-for="item in post" v-bind:key="item.id">
             <td>{{ item.id }}</td>
             <td @click="DiscUser(item.id)">
@@ -57,13 +55,12 @@ import axios from "axios";
 import swal from "sweetalert2";
 // import { inject } from 'vue'
 import headers from "@/components/header.vue";
-
 export default {
   name: "dash-board",
   components: { headers },
   data() {
     return {
-      post: [],
+      post:"",
       // id: this.key,
       id: this.$route.params.id,
     };
@@ -74,9 +71,13 @@ export default {
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
           this.post = response.data;
-        });
-    },
+          console.log(this.post);
+          this.b = this.post.number
+          this.Decrypt = window.atob(this.b)
 
+          console.log("Decrypt",this.Decrypt);
+        })
+    },
     DiscUser(recordId) {
       this.$router.push({
         name: "userdata",
@@ -90,7 +91,6 @@ export default {
         name: "user-form",
       });
     },
-
     Dell(recordId) {
       swal
         .fire({
@@ -99,7 +99,6 @@ export default {
           showCancelButton: true,
           focusConfirm: false,
           confirmButtonText: "Delete",
-
           cancelButtonText: "Cancel",
         })
         .then((response) => {
@@ -109,11 +108,13 @@ export default {
               headers: {
                 "Content-Type": "application/json",
               },
-            });
-            
-            swal.fire({ html: "Deleted! success" });
-            history.go()
-            
+            }).then((response) => {
+              if(response.ok){
+                swal.fire({ html: "Deleted! success" });
+          
+              }
+            })
+        
           }
         });
     },
@@ -125,19 +126,13 @@ export default {
         },
       });
     },
-    decrypt(){
-      var a = document.getElementById("dec")
-      var b = window.btoa(a)
-      console.log(b)
-    }
+    
   },
   mounted() {
     this.getdata();
-
   },
 };
 </script>
-
 <style>
 td a {
   text-decoration: none;
@@ -156,14 +151,12 @@ span {
 .gradient-custom {
   /* fallback for old browsers */
   background: #f6d365;
-
   /* Chrome 10-25, Safari 5.1-6 */
   background: -webkit-linear-gradient(
     to right bottom,
     rgba(246, 211, 101, 1),
     rgba(253, 160, 133, 1)
   );
-
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: linear-gradient(
     to right bottom,
@@ -182,7 +175,6 @@ span {
   padding: 10px 20px 10px 20px;
   text-decoration: none;
 }
-
 .btn1:hover {
   background: #3cb0fd;
   text-decoration: none;

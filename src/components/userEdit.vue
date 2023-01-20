@@ -131,6 +131,8 @@ export default {
         alert("Empty Field")
       }
       else{
+        var a = this.data.number;
+       this.b = window.btoa(a);
         fetch("https://api-generator.retool.com/jJl7vj/data/" + this.id, {
           method: "PUT",
           headers: {
@@ -139,13 +141,14 @@ export default {
           body: JSON.stringify({
             FullName: this.data.FullName,
             email: this.data.email,
-            number: this.data.number,
+            number: this.b,
           }),
         })
           .then((res) => {
             if (res.ok) {
               console.log("PUT Request Successful");
-              alert("User Data Updated Successful");
+              swal.fire({html:"Updated!",});
+              
               this.$router.push({ name: "userdata" });
             } else {
               console.log("PUT Request Failed");
