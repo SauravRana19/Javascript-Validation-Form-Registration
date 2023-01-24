@@ -30,7 +30,7 @@
                 type="button"
                 class="btn1"
                 data-bs-toggle="modal"
-                data-bs-target="#inputmodal"
+                data-bs-target="#useredit"
               >
                 <i class="fa fa-pencil" aria-hidden="true"></i>
                 Edit
@@ -49,17 +49,12 @@
           </tr>
         </thead>
       </table>
-      <div class="align-right">
-        <button type="button" class="btn btn-success" @click="Add()">
-          <i class="fa fa-address-book" aria-hidden="true"></i>Add New User
-        </button>
-      </div>
-
-      <div class="modal" id="inputmodal">
+      
+      <div class="modal" id="useredit">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel" > Edit user Form</h1>
+          <h1 class="modal-title fs-5" id="useredit" > Edit user Form</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
             <form>
@@ -130,26 +125,34 @@
               <button type="button" class="btn btn-success" data-bs-dismiss="modal" >
                 <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                 Dashboard
-              </button>
-              
+              </button> 
+                         
             </div>
+           
           </div>
+          
         </div>
+        
       </div>
+      <userform/> 
     </div>
+    
   </section>
+  
 </template>
 <Router-view></Router-view>
 <script>
 import axios from "axios";
 import swal from "sweetalert2";
+import userform from "@/components/userform.vue"
 // import { inject } from 'vue'
 import headers from "@/components/header.vue";
 export default {
   name: "dash-board",
-  components: { headers },
+  components: { headers,userform },
   data() {
     return {
+     
       post: [],
       b: [],
       id: this.$route.params.id,
@@ -170,6 +173,7 @@ export default {
   },
   methods: {
     getdata() {
+
       axios
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
@@ -179,6 +183,7 @@ export default {
           this.b.map((data) => {
             // console.log("data", data.number);
             data.number = window.atob(data.number);
+   
           });
         });
     },
@@ -264,9 +269,10 @@ export default {
             if (res.ok) {
               console.log("PUT Request Successful");
               
-              setTimeout(() => {
-                location.reload()
-              }, 2000);
+              // setTimeout(() => {
+              //   location.reload()
+              // }, 2000);
+              this.getdata()
               swal.fire({ html: "Updated!" });
             
               
