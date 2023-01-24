@@ -88,7 +88,7 @@ export default {
   methods: {
     Adddata(){
       if( this.FullName == "" || this.Email == "" || this.number == ''){
-        alert("Empty Fields")
+        swal.fire({title:"Empty Fields"})
       }else{ 
         var a = this.number;
        this.b = window.btoa(a);
@@ -110,10 +110,17 @@ export default {
           console.log(data);
           this.post = data;       
         });
-        this.$router.push({name: "dash-board"}); 
+         
         // alert("user Added")
-        swal.fire({html:"User Added",});
-        console.log("data")
+        // swal.fire({html:"User Added",});
+        setTimeout(() => {
+          
+                location.reload()
+              }, 10000);
+              this.$router.push({name: "dash-board"});
+              swal.fire({ html: "User Added" })
+              
+            
       }   
     },
     returnd(){

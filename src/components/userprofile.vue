@@ -39,16 +39,21 @@ export default {
       data: [],
       userdata: [],
       id: this.key,
+      b:[]
     };
   },
   methods: {
     getData() {
+      
       axios
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
           console.log("response", response.data);
           this.userdata = response.data;
-          console.log(this.userdata);
+          this.userdata.map((data) => {
+            // console.log("data", data.number);
+            data.number = window.atob(data.number);
+          });
         });
     },
     DiscUser(recordId) {

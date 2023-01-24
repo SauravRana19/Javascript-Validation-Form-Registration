@@ -195,7 +195,7 @@ html {
  }
  h1 {
    font-family:monospace;
-   margin-left: 20%;
+   
  }
  @keyframes slide {
    0% {
