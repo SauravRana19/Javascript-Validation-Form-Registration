@@ -134,7 +134,7 @@
         </div>
         
       </div>
-      <userform/> 
+      <userform /> 
     </div>
     
   </section>
@@ -147,12 +147,14 @@ import swal from "sweetalert2";
 import userform from "@/components/userform.vue"
 // import { inject } from 'vue'
 import headers from "@/components/header.vue";
+
+
 export default {
   name: "dash-board",
   components: { headers,userform },
   data() {
     return {
-     
+      
       post: [],
       b: [],
       id: this.$route.params.id,
@@ -173,17 +175,17 @@ export default {
   },
   methods: {
     getdata() {
-
+     
       axios
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
           this.post = response.data;
-          // console.log(this.post);
+          console.log(this.post);
           this.b = response.data;
           this.b.map((data) => {
-            // console.log("data", data.number);
+            console.log("data", data.number);
             data.number = window.atob(data.number);
-   
+       
           });
         });
     },
@@ -272,7 +274,7 @@ export default {
               // setTimeout(() => {
               //   location.reload()
               // }, 2000);
-              this.getdata()
+              this.getdata();
               swal.fire({ html: "Updated!" });
             
               
@@ -330,11 +332,14 @@ export default {
     
     
   },
-  mounted() {
-    this.getdata();
+   mounted() {
+     this.getdata();
 
     // swal.fire({html:"Dashboard",});
   },
+  unmounted() {
+    this.getdata();
+  }
 
   
 };

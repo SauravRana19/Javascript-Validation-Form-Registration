@@ -1,97 +1,103 @@
 <template>
-
-    <button
-      type="button"
-      data-bs-toggle="modal"
-      data-bs-target="#userforms"
-      class="btn btn-success"
-    >
-      <i class="fa fa-address-book" aria-hidden="true"></i>Add New User
-    </button>
-    <div class="modal" id="userforms">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="userforms">user Form</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <form>
-            <div class="form-group">
-              <label for=""> FullName:</label
-              ><input
-                class="form-control"
-                placeholder="Enter first name"
-                type="text"
-                v-model="FullName"
-                @keyup="register"
-              />
-              <!-- Error Message -->
-              <p v-if="error.length"></p>
-              <ul>
-                <li v-for="e in error" v-bind:key="e.id">
-                  {{ e.namereq }}
-                  {{ e.nameValid }}
-                </li>
-              </ul>
-            </div>
-            <div class="form-group">
-              <label for=""> Email:</label
-              ><input
-                class="form-control"
-                placeholder="Enter Email"
-                type="email"
-                v-model="Email"
-                @keyup="register"
-              />
-              <!-- Error Message -->
-              <p v-if="error.length"></p>
-              <ul>
-                <li v-for="e in error" v-bind:key="e.id">
-                  {{ e.emailReqError }}
-                  {{ e.emailValid }}
-                </li>
-              </ul>
-            </div>
-            <div class="form-group">
-              <label for=""> Password:</label
-              ><input
-                class="form-control"
-                placeholder="Enter password"
-                type="password"
-                v-model="number"
-                @keyup="register"
-              />
-              <!-- Error Message -->
-              <p v-if="error.length"></p>
-              <ul>
-                <li v-for="e in error" v-bind:key="e.id">
-                  {{ e.numberValid }}
-                  {{ e.regNumber }}
-                </li>
-              </ul>
-            </div>
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="register(), Adddata()"
-            >
-              <i class="fa fa-address-book" aria-hidden="true"></i>Add
-            </button>
-            <button type="button" class="btn btn-warning" @click="returnd()">
-              <i class="fa fa-long-arrow-left" aria-hidden="true"></i> Return
-            </button>
-          </form>
+  <button
+    type="button"
+    data-bs-toggle="modal"
+    data-bs-target="#userforms"
+    class="btn btn-success"
+  >
+    <i class="fa fa-address-book" aria-hidden="true"></i>Add New User
+  </button>
+  <div class="modal" id="userforms" @close="getdata()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="userforms">user Form</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
+        <form>
+          <div class="form-group">
+            <label for=""> FullName:</label
+            ><input
+              class="form-control"
+              placeholder="Enter first name"
+              type="text"
+              v-model="FullName"
+              @keyup="register"
+            />
+            <!-- Error Message -->
+            <p v-if="error.length"></p>
+            <ul>
+              <li v-for="e in error" v-bind:key="e.id">
+                {{ e.namereq }}
+                {{ e.nameValid }}
+              </li>
+            </ul>
+          </div>
+          <div class="form-group">
+            <label for=""> Email:</label
+            ><input
+              class="form-control"
+              placeholder="Enter Email"
+              type="email"
+              v-model="Email"
+              @keyup="register"
+            />
+            <!-- Error Message -->
+            <p v-if="error.length"></p>
+            <ul>
+              <li v-for="e in error" v-bind:key="e.id">
+                {{ e.emailReqError }}
+                {{ e.emailValid }}
+              </li>
+            </ul>
+          </div>
+          <div class="form-group">
+            <label for=""> Password:</label
+            ><input
+              class="form-control"
+              placeholder="Enter password"
+              type="password"
+              v-model="number"
+              @keyup="register"
+            />
+            <!-- Error Message -->
+            <p v-if="error.length"></p>
+            <ul>
+              <li v-for="e in error" v-bind:key="e.id">
+                {{ e.numberValid }}
+                {{ e.regNumber }}
+              </li>
+            </ul>
+          </div>
+          <button
+            data-bs-dismiss="modal"
+            type="button"
+            class="btn btn-primary"
+            @click="register(), Adddata()"
+          >
+            <i class="fa fa-address-book" aria-hidden="true"></i>Add
+          </button>
+          <button
+            type="button"
+            class="btn btn-warning"
+            data-bs-dismiss="modal"
+            @click="returnd()"
+          >
+            <i class="fa fa-long-arrow-left" aria-hidden="true"></i> Return
+          </button>
+        </form>
       </div>
     </div>
- 
+  </div>
 </template>
 <script>
+
+import axios from "axios";
 import swal from "sweetalert2";
 export default {
   name: "user-form",
@@ -111,6 +117,22 @@ export default {
     };
   },
   methods: {
+    getdata() {
+     
+     axios
+       .get(`https://api-generator.retool.com/jJl7vj/data`)
+       .then((response) => {
+         this.post = response.data;
+         console.log(this.post);
+         this.b = response.data;
+         this.b.map((data) => {
+           console.log("data", data.number);
+           data.number = window.atob(data.number);
+      
+         });
+       });
+   },
+   
     Adddata() {
       if (this.FullName == "" || this.Email == "" || this.number == "") {
         swal.fire({ title: "Empty Fields" });
@@ -135,20 +157,17 @@ export default {
             console.log(data);
             this.post = data;
           });
+        swal.fire({ html: "User Added" });
 
         // alert("user Added")
-        // swal.fire({html:"User Added",});
-        setTimeout(() => {
-          location.reload();
-        }, 3000);
-        this.$router.push({ name: "dash-board" }
-        );
 
-        swal.fire({ html: "User Added" });
+        // swal.fire({html:"User Added",});
+        // setTimeout(() => {
+        //   this.getdata();
+        // }, 2000);
       }
     },
     returnd() {
-      this.$router.push({ name: "dash-board" });
       swal.fire({ html: "Previous Page" });
     },
     register() {
@@ -192,6 +211,11 @@ export default {
       }
     },
   },
-};
+  unmounted() {
+    this.getdata();
+  }
+  
+}
+
 </script>
 <style></style>
