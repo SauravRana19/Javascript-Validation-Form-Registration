@@ -1,6 +1,6 @@
 <template>
   <button
-    type="button"
+    type="button "
     data-bs-toggle="modal"
     data-bs-target="#userforms"
     class="btn btn-success"
@@ -78,7 +78,7 @@
             data-bs-dismiss="modal"
             type="button"
             class="btn btn-primary"
-            @click="register(), Adddata()"
+            @click="register(), Adddata(), sdata()"
           >
             <i class="fa fa-address-book" aria-hidden="true"></i>Add
           </button>
@@ -96,15 +96,12 @@
   </div>
 </template>
 <script>
-
-import axios from "axios";
 import swal from "sweetalert2";
 export default {
   name: "user-form",
   data() {
     return {
       post: [],
-      data: [],
       FullName: "",
       Email: "",
       number: "",
@@ -112,27 +109,16 @@ export default {
       error: [],
       regEmail:
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      regName: /^[a-z A-Z][1,9]\d{1,5}$/,
-      regNumber: /^[a-z A-Z][5,]\d{5,}/,
+      regName: /^[a-z A-Z]\w{15}$/,
+      regNumber: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/
     };
   },
   methods: {
-    getdata() {
-     
-     axios
-       .get(`https://api-generator.retool.com/jJl7vj/data`)
-       .then((response) => {
-         this.post = response.data;
-         console.log(this.post);
-         this.b = response.data;
-         this.b.map((data) => {
-           console.log("data", data.number);
-           data.number = window.atob(data.number);
-      
-         });
-       });
-   },
-   
+    sdata() {
+      let emitdata = this.post
+      this.$emit("EmitData", emitdata);
+      console.log(this.sdata());
+    },
     Adddata() {
       if (this.FullName == "" || this.Email == "" || this.number == "") {
         swal.fire({ title: "Empty Fields" });
@@ -158,9 +144,7 @@ export default {
             this.post = data;
           });
         swal.fire({ html: "User Added" });
-
         // alert("user Added")
-
         // swal.fire({html:"User Added",});
         // setTimeout(() => {
         //   this.getdata();
@@ -188,7 +172,7 @@ export default {
         });
       } else if (this.regName.test(this.FullName)) {
         this.error.push({
-          nameValid: "Please enter alphabets only",
+          nameValid: "Minimum 15 alphabets ",
         });
       }
       if (!this.Email) {
@@ -202,20 +186,15 @@ export default {
       }
       if (!this.number) {
         this.error.push({
-          numberValid: "Password is required",
+          numberValid: "Password is not valid",
         });
       } else if (!this.regNumber.test(this.number)) {
         this.error.push({
-          numberValid: "Enter Password only",
+          numberValid: "Password Should containe one Numeric, one Special Character, Minimum 6 Chracter  ",
         });
       }
     },
   },
-  unmounted() {
-    this.getdata();
-  }
-  
-}
-
+};
 </script>
 <style></style>

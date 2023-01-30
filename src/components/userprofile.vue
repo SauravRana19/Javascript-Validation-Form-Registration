@@ -44,7 +44,6 @@ export default {
   },
   methods: {
     getData() {
-      
       axios
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
@@ -92,3 +91,4 @@ tr {
   font-style: initial;
 }
 </style>
+

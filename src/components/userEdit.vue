@@ -1,10 +1,10 @@
 <template>
-     <div class="bg"></div>
-    <div class="bg bg2"></div>
-    <div class="bg bg3"></div>  
-  <div class="RegisterD" style="margin-top: 20%;">
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+  <div class="RegisterD" style="margin-top: 20%">
     <h1>Edit UserData</h1>
-    <form >
+    <form>
       <div class="form-group">
         <label for=""> FullName:</label
         ><input
@@ -15,14 +15,13 @@
           @keyup="register"
         />
         <!-- Error Message -->
-          <p v-if="error.length">
-            <ul>
-              <li v-for =" e in error" v-bind:key="e.id"> 
-                {{e.namereq}} 
-               {{ e.nameValid }}         
-              </li>
-            </ul>
-          </p>         
+        <p v-if="error.length"></p>
+        <ul>
+          <li v-for="e in error" v-bind:key="e.id">
+            {{ e.namereq }}
+            {{ e.nameValid }}
+          </li>
+        </ul>
       </div>
       <div class="form-group">
         <label for=""> Email:</label
@@ -34,14 +33,13 @@
           @keyup="register"
         />
         <!-- Error Message -->
-          <p v-if="error.length">
-            <ul>
-              <li v-for =" e in error" v-bind:key="e.id"> 
-                {{e.emailReqError}} 
-               {{e.emailValid}}     
-              </li>
-            </ul>
-          </p>          
+        <p v-if="error.length"></p>
+        <ul>
+          <li v-for="e in error" v-bind:key="e.id">
+            {{ e.emailReqError }}
+            {{ e.emailValid }}
+          </li>
+        </ul>
       </div>
       <div class="form-group">
         <label for=""> Password:</label
@@ -53,18 +51,21 @@
           @keyup="register"
         />
         <!-- Error Message -->
-          <p v-if="error.length">
-            <ul >
-              <li v-for =" e in error" v-bind:key="e.id"> 
-                {{ e.numberValid}} 
-                {{ e.regNumber }}    
-              </li>
-            </ul>
-          </p>          
+        <p v-if="error.length"></p>
+        <ul>
+          <li v-for="e in error" v-bind:key="e.id">
+            {{ e.numberValid }}
+            {{ e.regNumber }}
+          </li>
+        </ul>
       </div>
     </form>
-    <div style="display: grid;">
-    <button type="button" class="btn btn-warning" @click="Update(),register()">
+    <div style="display: grid">
+      <button
+        type="button"
+        class="btn btn-warning"
+        @click="Update(), register()"
+      >
         <i class="fa fa-pencil" aria-hidden="true"></i>Update
       </button>
       <button type="button" class="btn btn-success" @click="back()">
@@ -73,9 +74,8 @@
       <button type="button" class="btn btn-primary" @click="back2()">
         <i class="fa fa-long-arrow-left" aria-hidden="true"></i> User Profile
       </button>
+    </div>
   </div>
-  </div>
-
 </template>
 <script>
 import swal from "sweetalert2";
@@ -85,15 +85,16 @@ export default {
   data() {
     return {
       // regex for name with max lenght ?
-      error:[],
-      regEmail: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      regName:  /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
-      regNumber: /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
-        id: this.$route.params.id,
+      error: [],
+      regEmail:
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      regName: /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
+      regNumber: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
+      id: this.$route.params.id,
       data: {
         FullName: "",
         email: "",
-        number: "",    
+        number: "",
       },
       //what is regex for name?
     };
@@ -101,15 +102,10 @@ export default {
   methods: {
     getdata() {
       axios
-        .get(
-          " https://api-generator.retool.com/jJl7vj/data/" +
-            this.id
-        )
+        .get(" https://api-generator.retool.com/jJl7vj/data/" + this.id)
         .then((response) => {
           console.log(response.data);
           this.data = response.data;
-
-          
         });
     },
     Update() {
@@ -120,12 +116,15 @@ export default {
       // var regemail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       // //   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       // var regnumb = /^[0-9]\d{9}$/;
-      if( this.data.FullName == '' || this.data.email == '' || this.data.number == ''){
-        swal.fire({title:"Empty Fields"})
-      }
-      else{
+      if (
+        this.data.FullName == "" ||
+        this.data.email == "" ||
+        this.data.number == ""
+      ) {
+        swal.fire({ title: "Empty Fields" });
+      } else {
         var a = this.data.number;
-       this.b = window.btoa(a);
+        this.b = window.btoa(a);
         fetch("https://api-generator.retool.com/jJl7vj/data/" + this.id, {
           method: "PUT",
           headers: {
@@ -140,7 +139,7 @@ export default {
           .then((res) => {
             if (res.ok) {
               console.log("PUT Request Successful");
-              swal.fire({html:"Updated!",});
+              swal.fire({ html: "Updated!" });
               this.$router.push({ name: "dash-board" });
             } else {
               console.log("PUT Request Failed");
@@ -152,53 +151,54 @@ export default {
           .catch((err) => console.log(err));
       }
     },
-      register()
-    {
-     this.error=[];
-     if(this.data.FullName && this.regName.test(!this.data.FullName)
-      && this.data.email && this.regEmail.test(this.data.email)
-       && this.data.number && this.regNumber.test(this.data.number))
-     {
-      console.warn("no error")
-      // return true
+    register() {
+      this.error = [];
+      if (
+        this.data.FullName &&
+        this.regName.test(!this.data.FullName) &&
+        this.data.email &&
+        this.regEmail.test(this.data.email) &&
+        this.data.number &&
+        this.regNumber.test(this.data.number)
+      ) {
+        console.warn("no error");
+        // return true
       }
-      if(!this.data.FullName)
-      {
+      if (!this.data.FullName) {
         this.error.push({
-          namereq:"Name is required"});
-      }
-      else if 
-      (this.regName.test(this.data.FullName)){
-          this.error.push({
-            nameValid: "Please enter alphabets only"});
-          }
-     if(!this.data.email)
-      {
+          namereq: "Name is required",
+        });
+      } else if (this.regName.test(this.data.FullName)) {
         this.error.push({
-          emailReqError: "Email is required"
+          nameValid: "Please enter alphabets only",
         });
       }
-      else if 
-        (!this.regEmail.test(this.data.email)){
-          this.error.push({
-            emailValid: "Email is not valid"});
+      if (!this.data.email) {
+        this.error.push({
+          emailReqError: "Email is required",
+        });
+      } else if (!this.regEmail.test(this.data.email)) {
+        this.error.push({
+          emailValid: "Email is not valid",
+        });
       }
-      if(!this.data.number){
-     this.error.push({
-      numberValid: "password is required"
-     });
+      if (!this.data.number) {
+        this.error.push({
+          numberValid: "password is required",
+        });
+      } else if (!this.regNumber.test(this.data.number)) {
+        this.error.push({
+          numberValid:
+            "Password Should containe one Numeric, one Special Character, Minimum 6 Chracter  ",
+        });
       }
-      else if(!this.regNumber.test(this.data.number)){
-          this.error.push({
-            numberValid: "Please enter password only"});
-          }
     },
     back() {
-      swal.fire({html:"Previous Page",});
+      swal.fire({ html: "Previous Page" });
       this.$router.push({ name: "dash-board" });
     },
     back2() {
-      swal.fire({html:"userdata",});
+      swal.fire({ html: "userdata" });
       this.$router.push({ name: "userdata" });
     },
   },
@@ -212,9 +212,9 @@ export default {
 li {
   list-style: none;
 }
-ul{
+ul {
   color: red;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: large;
   margin-left: -30px;
 }

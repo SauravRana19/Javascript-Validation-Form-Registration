@@ -5,12 +5,12 @@
   <section
     style="
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-      width: auto; 
+      width: 100%;
       margin-top: 10%;
     "
   >
     <div><headers></headers></div>
-    <div class="tables">
+    <div class="tables mb-0">
       <table class="table table-hover">
         <thead class="thead-dark">
           <th>Id</th>
@@ -49,7 +49,6 @@
           </tr>
         </thead>
       </table>
-      
       <div class="modal" id="useredit">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -117,7 +116,6 @@
               <button
                 type="button btn"
                 class="btn btn-warning"
-                
                 @click="Update(data.id), register() "
                 data-bs-dismiss="modal"              >
                 <i class="fa fa-pencil" aria-hidden="true"></i>Update
@@ -126,19 +124,15 @@
                 <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                 Dashboard
               </button> 
-                         
             </div>
-           
           </div>
-          
         </div>
-        
       </div>
       <userform /> 
     </div>
-    
+    <div @EmitData="emits">
+    </div>
   </section>
-  
 </template>
 <Router-view></Router-view>
 <script>
@@ -147,18 +141,14 @@ import swal from "sweetalert2";
 import userform from "@/components/userform.vue"
 // import { inject } from 'vue'
 import headers from "@/components/header.vue";
-
-
 export default {
   name: "dash-board",
   components: { headers,userform },
   data() {
     return {
-      
       post: [],
       b: [],
       id: this.$route.params.id,
-
       //Modal
       error: [],
       regEmail:
@@ -174,8 +164,10 @@ export default {
     };
   },
   methods: {
+    emits(emitdata){
+      console.log(emitdata)
+    },
     getdata() {
-     
       axios
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
@@ -185,7 +177,6 @@ export default {
           this.b.map((data) => {
             console.log("data", data.number);
             data.number = window.atob(data.number);
-       
           });
         });
     },
@@ -270,14 +261,11 @@ export default {
           .then((res) => {
             if (res.ok) {
               console.log("PUT Request Successful");
-              
               // setTimeout(() => {
               //   location.reload()
               // }, 2000);
               this.getdata();
               swal.fire({ html: "Updated!" });
-            
-              
             } else {
               console.log("PUT Request Failed");
             }
@@ -329,19 +317,11 @@ export default {
         });
       }
     },
-    
-    
   },
    mounted() {
      this.getdata();
-
     // swal.fire({html:"Dashboard",});
   },
-  unmounted() {
-    this.getdata();
-  }
-
-  
 };
 </script>
 <style>
@@ -362,7 +342,6 @@ export default {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
-
 .btn2{
   background-color: rgba(255, 0, 0, 0.626);
   border-radius: 12px;
@@ -379,10 +358,7 @@ export default {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-
 }
-
-
 li {
   list-style: none;
 }
@@ -424,10 +400,5 @@ span {
 }
 .align-right {
   text-align: right;
-}
-.btn{
-  width: 10rem;
-  margin-left: 30%;
-  margin-top: 10px;
 }
 </style>
