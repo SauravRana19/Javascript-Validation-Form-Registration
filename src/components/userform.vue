@@ -17,6 +17,7 @@
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            
           ></button>
         </div>
         <form>
@@ -78,7 +79,7 @@
             data-bs-dismiss="modal"
             type="button"
             class="btn btn-primary"
-            @click="register(), Adddata(), sdata()"
+            @click="register(), Adddata()"
           >
             <i class="fa fa-address-book" aria-hidden="true"></i>Add
           </button>
@@ -114,11 +115,7 @@ export default {
     };
   },
   methods: {
-    sdata() {
-      let emitdata = this.post
-      this.$emit("EmitData", emitdata);
-      console.log(this.sdata());
-    },
+   
     Adddata() {
       if (this.FullName == "" || this.Email == "" || this.number == "") {
         swal.fire({ title: "Empty Fields" });
@@ -142,6 +139,7 @@ export default {
           .then((data) => {
             console.log(data);
             this.post = data;
+            this.$emit('showData')
           });
         swal.fire({ html: "User Added" });
         // alert("user Added")
@@ -194,6 +192,9 @@ export default {
         });
       }
     },
+    showdata(){
+      this.$emit('showData')
+    }
   },
 };
 </script>

@@ -124,14 +124,15 @@
                 <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
                 Dashboard
               </button> 
+            
             </div>
           </div>
         </div>
       </div>
-      <userform /> 
+      <userform @showData="getdata()" /> 
     </div>
-    <div @EmitData="emits">
-    </div>
+    
+    
   </section>
 </template>
 <Router-view></Router-view>
@@ -154,7 +155,7 @@ export default {
       regEmail:
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       regName: /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
-      regNumber: /^(?=.{1,5}$)[a-zA-Z]+\d+$/,
+      regNumber: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
       // id: this.$route.params.id,
       data: {
         FullName: "",
@@ -164,10 +165,9 @@ export default {
     };
   },
   methods: {
-    emits(emitdata){
-      console.log(emitdata)
-    },
-    getdata() {
+    
+    getdata(event) {
+      console.log("Event",event)
       axios
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
@@ -214,9 +214,7 @@ export default {
               if (response.ok) {
                 swal.fire({html:"Deleted! success",});
                 // this.$router.go(this.$router.currentRoute);
-                setTimeout(() => {
-                location.reload()
-              }, 3000);
+                this.getdata();
               }
             });
           }
@@ -309,11 +307,11 @@ export default {
       }
       if (!this.data.number) {
         this.error.push({
-          numberValid: "password is required",
+          numberValid: "Password is required",
         });
       } else if (!this.regNumber.test(this.data.number)) {
         this.error.push({
-          numberValid: "Please enter password only",
+          numberValid: "Password Should containe one Numeric, one Special Character, Minimum 6 Chracter  ",
         });
       }
     },
