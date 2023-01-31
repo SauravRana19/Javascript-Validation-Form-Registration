@@ -1,149 +1,142 @@
 <template>
-  <Suspense>
-    <template #default>
-      <div class="bg"></div>
-      <div class="bg bg2"></div>
-      <div class="bg bg3"></div>
-      <section
-        style="
-          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-          width: 100%;
-          margin-top: 10%;
-        "
-      >
-        <div><headers></headers></div>
-        <div class="tables mb-0">
-          <table class="table table-hover">
-            <thead class="thead-dark">
-              <th>Id</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Password</th>
-              <tr v-for="item in post" v-bind:key="item.id">
-                <td>{{ item.id }}</td>
-                <td @click="DiscUser(item.id)">
-                  <a href="#">{{ item.FullName }} </a>
-                </td>
-                <td>{{ item.email }}</td>
-                <td>{{ item.number }}</td>
-                <td>
-                  <button
-                    @click="editUser(item.id)"
-                    type="button"
-                    class="btn1"
-                    data-bs-toggle="modal"
-                    data-bs-target="#useredit"
-                  >
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                    Edit
-                  </button>
-                </td>
-                <td>
-                  <button @click="Dell(item.id)" type="button" class="btn2">
-                    <i class="fa fa-close"></i>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            </thead>
-          </table>
-          <div class="modal" id="useredit">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="useredit">Edit user Form</h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <form>
-                  <div class="form-group">
-                    <label for=""> FullName:</label
-                    ><input
-                      class="form-control"
-                      placeholder="Enter Full Name"
-                      type="text"
-                      v-model="data.FullName"
-                      @keyup="register"
-                    />
-                    <!-- Error Message -->
-                    <p v-if="error.length"></p>
-                    <ul>
-                      <li v-for="e in error" v-bind:key="e.id">
-                        {{ e.namereq }}
-                        {{ e.nameValid }}
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="form-group">
-                    <label for=""> Email:</label
-                    ><input
-                      class="form-control"
-                      placeholder="Enter Email"
-                      type="email"
-                      v-model="data.email"
-                      @keyup="register"
-                    />
-                    <!-- Error Message -->
-                    <p v-if="error.length"></p>
-                    <ul>
-                      <li v-for="e in error" v-bind:key="e.id">
-                        {{ e.emailReqError }}
-                        {{ e.emailValid }}
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="form-group">
-                    <label for=""> Password:</label
-                    ><input
-                      class="form-control"
-                      placeholder="Enter Password"
-                      type="password"
-                      v-model="data.number"
-                      @keyup="register"
-                    />
-                    <!-- Error Message -->
-                    <p v-if="error.length"></p>
-                    <ul>
-                      <li v-for="e in error" v-bind:key="e.id">
-                        {{ e.numberValid }}
-                        {{ e.regNumber }}
-                      </li>
-                    </ul>
-                  </div>
-                </form>
-                <div style="display: grid">
-                  <button
-                    type="button btn"
-                    class="btn btn-warning"
-                    @click="Update(data.id), register()"
-                    data-bs-dismiss="modal"
-                  >
-                    <i class="fa fa-pencil" aria-hidden="true"></i>Update
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-success"
-                    data-bs-dismiss="modal"
-                  >
-                    <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-                    Dashboard
-                  </button>
-                </div>
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+  <section
+    style="
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      width: 100%;
+      margin-top: 10%;
+    "
+  >
+    <div><headers /></div>
+    <div class="tables mb-0">
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <th>Id</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
+          <tr v-for="item in post" v-bind:key="item.id">
+            <td>{{ item.id }}</td>
+            <td @click="DiscUser(item.id)">
+              <a href="#">{{ item.FullName }} </a>
+            </td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.number }}</td>
+            <td>
+              <button
+                @click="editUser(item.id)"
+                type="button"
+                class="btn1"
+                data-bs-toggle="modal"
+                data-bs-target="#useredit"
+              >
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+                Edit
+              </button>
+            </td>
+            <td>
+              <button @click="Dell(item.id)" type="button" class="btn2">
+                <i class="fa fa-close"></i>
+                Delete
+              </button>
+            </td>
+          </tr>
+        </thead>
+      </table>
+      <div class="modal" id="useredit">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="useredit">Edit user Form</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <form>
+              <div class="form-group">
+                <label for=""> FullName:</label
+                ><input
+                  class="form-control"
+                  placeholder="Enter Full Name"
+                  type="text"
+                  v-model="data.FullName"
+                  @keyup="register"
+                />
+                <!-- Error Message -->
+                <p v-if="error.length"></p>
+                <ul>
+                  <li v-for="e in error" v-bind:key="e.id">
+                    {{ e.namereq }}
+                    {{ e.nameValid }}
+                  </li>
+                </ul>
               </div>
+              <div class="form-group">
+                <label for=""> Email:</label
+                ><input
+                  class="form-control"
+                  placeholder="Enter Email"
+                  type="email"
+                  v-model="data.email"
+                  @keyup="register"
+                />
+                <!-- Error Message -->
+                <p v-if="error.length"></p>
+                <ul>
+                  <li v-for="e in error" v-bind:key="e.id">
+                    {{ e.emailReqError }}
+                    {{ e.emailValid }}
+                  </li>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label for=""> Password:</label
+                ><input
+                  class="form-control"
+                  placeholder="Enter Password"
+                  type="password"
+                  v-model="data.number"
+                  @keyup="register"
+                />
+                <!-- Error Message -->
+                <p v-if="error.length"></p>
+                <ul>
+                  <li v-for="e in error" v-bind:key="e.id">
+                    {{ e.numberValid }}
+                    {{ e.regNumber }}
+                  </li>
+                </ul>
+              </div>
+            </form>
+            <div style="display: grid">
+              <button
+                type="button btn"
+                class="btn btn-warning"
+                @click="Update(data.id), register()"
+                data-bs-dismiss="modal"
+              >
+                <i class="fa fa-pencil" aria-hidden="true"></i>Update
+              </button>
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                Dashboard
+              </button>
             </div>
           </div>
-          <userform @showData="getdata()" />
         </div>
-      </section>
-    </template>
-    <template #fallback>
-      <h1>loading....</h1>
-    </template>
-  </Suspense>
+      </div>
+      <userform @showData="getdata()" />
+    </div>
+  </section>
 </template>
 <Router-view></Router-view>
 <script>
@@ -175,8 +168,8 @@ export default {
     };
   },
   methods: {
-    getdata(event) {
-      console.log("Event", event);
+    getdata() {
+      
       axios
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
@@ -327,11 +320,10 @@ export default {
     },
   },
   created() {
-    setInterval(this.getdata(), 3000);
-
-    // swal.fire({html:"Dashboard",});
-  },
-};
+    this.getdata();
+   
+},
+}
 </script>
 <style>
 .btn1 {
