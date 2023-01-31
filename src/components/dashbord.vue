@@ -1,150 +1,160 @@
 <template>
-  <div class="bg"></div>
-  <div class="bg bg2"></div>
-  <div class="bg bg3"></div>
-  <section
-    style="
-      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-      width: 100%;
-      margin-top: 10%;
-    "
-  >
-    <div><headers></headers></div>
-    <div class="tables mb-0">
-      <table class="table table-hover">
-        <thead class="thead-dark">
-          <th>Id</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Password</th>
-          <tr v-for="item in post" v-bind:key="item.id">
-            <td>{{ item.id }}</td>
-            <td @click="DiscUser(item.id)">
-              <a href="#">{{ item.FullName }} </a>
-            </td>
-            <td>{{ item.email }}</td>
-            <td>{{ item.number }}</td>
-            <td>
-              <button
-                @click="editUser(item.id)"
-                type="button"
-                class="btn1"
-                data-bs-toggle="modal"
-                data-bs-target="#useredit"
-              >
-                <i class="fa fa-pencil" aria-hidden="true"></i>
-                Edit
-              </button>
-            </td>
-            <td>
-              <button
-                @click="Dell(item.id)"
-                type="button"
-                class="btn2"
-              >
-                <i class="fa fa-close"></i>
-                Delete
-              </button>
-            </td>
-          </tr>
-        </thead>
-      </table>
-      <div class="modal" id="useredit">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-          <h1 class="modal-title fs-5" id="useredit" > Edit user Form</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-            <form>
-              <div class="form-group">
-                <label for=""> FullName:</label
-                ><input
-                  class="form-control"
-                  placeholder="Enter Full Name"
-                  type="text"
-                  v-model="data.FullName"
-                  @keyup="register"
-                />
-                <!-- Error Message -->
-                <p v-if="error.length"></p>
-                <ul>
-                  <li v-for="e in error" v-bind:key="e.id">
-                    {{ e.namereq }}
-                    {{ e.nameValid }}
-                  </li>
-                </ul>
+  <Suspense>
+    <template #default>
+      <div class="bg"></div>
+      <div class="bg bg2"></div>
+      <div class="bg bg3"></div>
+      <section
+        style="
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          width: 100%;
+          margin-top: 10%;
+        "
+      >
+        <div><headers></headers></div>
+        <div class="tables mb-0">
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <th>Id</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Password</th>
+              <tr v-for="item in post" v-bind:key="item.id">
+                <td>{{ item.id }}</td>
+                <td @click="DiscUser(item.id)">
+                  <a href="#">{{ item.FullName }} </a>
+                </td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.number }}</td>
+                <td>
+                  <button
+                    @click="editUser(item.id)"
+                    type="button"
+                    class="btn1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#useredit"
+                  >
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button @click="Dell(item.id)" type="button" class="btn2">
+                    <i class="fa fa-close"></i>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </thead>
+          </table>
+          <div class="modal" id="useredit">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="useredit">Edit user Form</h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <form>
+                  <div class="form-group">
+                    <label for=""> FullName:</label
+                    ><input
+                      class="form-control"
+                      placeholder="Enter Full Name"
+                      type="text"
+                      v-model="data.FullName"
+                      @keyup="register"
+                    />
+                    <!-- Error Message -->
+                    <p v-if="error.length"></p>
+                    <ul>
+                      <li v-for="e in error" v-bind:key="e.id">
+                        {{ e.namereq }}
+                        {{ e.nameValid }}
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="form-group">
+                    <label for=""> Email:</label
+                    ><input
+                      class="form-control"
+                      placeholder="Enter Email"
+                      type="email"
+                      v-model="data.email"
+                      @keyup="register"
+                    />
+                    <!-- Error Message -->
+                    <p v-if="error.length"></p>
+                    <ul>
+                      <li v-for="e in error" v-bind:key="e.id">
+                        {{ e.emailReqError }}
+                        {{ e.emailValid }}
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="form-group">
+                    <label for=""> Password:</label
+                    ><input
+                      class="form-control"
+                      placeholder="Enter Password"
+                      type="password"
+                      v-model="data.number"
+                      @keyup="register"
+                    />
+                    <!-- Error Message -->
+                    <p v-if="error.length"></p>
+                    <ul>
+                      <li v-for="e in error" v-bind:key="e.id">
+                        {{ e.numberValid }}
+                        {{ e.regNumber }}
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+                <div style="display: grid">
+                  <button
+                    type="button btn"
+                    class="btn btn-warning"
+                    @click="Update(data.id), register()"
+                    data-bs-dismiss="modal"
+                  >
+                    <i class="fa fa-pencil" aria-hidden="true"></i>Update
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    data-bs-dismiss="modal"
+                  >
+                    <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                    Dashboard
+                  </button>
+                </div>
               </div>
-              <div class="form-group">
-                <label for=""> Email:</label
-                ><input
-                  class="form-control"
-                  placeholder="Enter Email"
-                  type="email"
-                  v-model="data.email"
-                  @keyup="register"
-                />
-                <!-- Error Message -->
-                <p v-if="error.length"></p>
-                <ul>
-                  <li v-for="e in error" v-bind:key="e.id">
-                    {{ e.emailReqError }}
-                    {{ e.emailValid }}
-                  </li>
-                </ul>
-              </div>
-              <div class="form-group">
-                <label for=""> Password:</label
-                ><input
-                  class="form-control"
-                  placeholder="Enter Password"
-                  type="password"
-                  v-model="data.number"
-                  @keyup="register"
-                />
-                <!-- Error Message -->
-                <p v-if="error.length"></p>
-                <ul>
-                  <li v-for="e in error" v-bind:key="e.id">
-                    {{ e.numberValid }}
-                    {{ e.regNumber }}
-                  </li>
-                </ul>
-              </div>
-            </form>
-            <div style="display: grid">
-              <button
-                type="button btn"
-                class="btn btn-warning"
-                @click="Update(data.id), register() "
-                data-bs-dismiss="modal"              >
-                <i class="fa fa-pencil" aria-hidden="true"></i>Update
-              </button>
-              <button type="button" class="btn btn-success" data-bs-dismiss="modal" >
-                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-                Dashboard
-              </button> 
-            
             </div>
           </div>
+          <userform @showData="getdata()" />
         </div>
-      </div>
-      <userform @showData="getdata()" /> 
-    </div>
-    
-    
-  </section>
+      </section>
+    </template>
+    <template #fallback>
+      <h1>loading....</h1>
+    </template>
+  </Suspense>
 </template>
 <Router-view></Router-view>
 <script>
 import axios from "axios";
 import swal from "sweetalert2";
-import userform from "@/components/userform.vue"
+import userform from "@/components/userform.vue";
 // import { inject } from 'vue'
 import headers from "@/components/header.vue";
 export default {
   name: "dash-board",
-  components: { headers,userform },
+  components: { headers, userform },
   data() {
     return {
       post: [],
@@ -165,9 +175,8 @@ export default {
     };
   },
   methods: {
-    
     getdata(event) {
-      console.log("Event",event)
+      console.log("Event", event);
       axios
         .get(`https://api-generator.retool.com/jJl7vj/data`)
         .then((response) => {
@@ -212,7 +221,7 @@ export default {
               },
             }).then((response) => {
               if (response.ok) {
-                swal.fire({html:"Deleted! success",});
+                swal.fire({ html: "Deleted! success" });
                 // this.$router.go(this.$router.currentRoute);
                 this.getdata();
               }
@@ -311,19 +320,21 @@ export default {
         });
       } else if (!this.regNumber.test(this.data.number)) {
         this.error.push({
-          numberValid: "Password Should containe one Numeric, one Special Character, Minimum 6 Chracter  ",
+          numberValid:
+            "Password Should containe one Numeric, one Special Character, Minimum 6 Chracter  ",
         });
       }
     },
   },
-   mounted() {
-     this.getdata();
+  created() {
+    setInterval(this.getdata(), 3000);
+
     // swal.fire({html:"Dashboard",});
   },
 };
 </script>
 <style>
-.btn1{
+.btn1 {
   background-color: #fff000;
   border-radius: 12px;
   color: #000;
@@ -340,7 +351,7 @@ export default {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
-.btn2{
+.btn2 {
   background-color: rgba(255, 0, 0, 0.626);
   border-radius: 12px;
   color: #fff;

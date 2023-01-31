@@ -113,7 +113,7 @@ export default {
       errormsg: "",
       id: this.$route.params.id,
     };
-  },
+  }, 
   methods: {
     getdata() {
       axios

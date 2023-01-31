@@ -17,7 +17,6 @@
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
-            
           ></button>
         </div>
         <form>
@@ -79,7 +78,7 @@
             data-bs-dismiss="modal"
             type="button"
             class="btn btn-primary"
-            @click="register(), Adddata()"
+            @click="Adddata()"
           >
             <i class="fa fa-address-book" aria-hidden="true"></i>Add
           </button>
@@ -109,13 +108,12 @@ export default {
       id: this.$route.params.id,
       error: [],
       regEmail:
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
       regName: /^[a-z A-Z]\w{15}$/,
-      regNumber: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/
+      regNumber: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/,
     };
   },
   methods: {
-   
     Adddata() {
       if (this.FullName == "" || this.Email == "" || this.number == "") {
         swal.fire({ title: "Empty Fields" });
@@ -139,14 +137,12 @@ export default {
           .then((data) => {
             console.log(data);
             this.post = data;
-            this.$emit('showData')
+            this.FullName = "",
+            this.Email = "",
+            this.number = "",
+            this.$emit("showData");
           });
         swal.fire({ html: "User Added" });
-        // alert("user Added")
-        // swal.fire({html:"User Added",});
-        // setTimeout(() => {
-        //   this.getdata();
-        // }, 2000);
       }
     },
     returnd() {
@@ -184,17 +180,18 @@ export default {
       }
       if (!this.number) {
         this.error.push({
-          numberValid: "Password is not valid",
+          numberValid: "Password is required",
         });
       } else if (!this.regNumber.test(this.number)) {
         this.error.push({
-          numberValid: "Password Should containe one Numeric, one Special Character, Minimum 6 Chracter  ",
+          numberValid:
+            "Password Should containe one Numeric, one Special Character, Minimum 6 Chracter  ",
         });
       }
     },
-    showdata(){
-      this.$emit('showData')
-    }
+    showdata() {
+      this.$emit("showData");
+    },
   },
 };
 </script>
