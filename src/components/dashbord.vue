@@ -37,7 +37,7 @@
               </button>
             </td>
             <td>
-              <button @click="Dell(item.id)" type="button" class="btn2">
+              <button   type="button" class="btn2">
                 <i class="fa fa-close"></i>
                 Delete
               </button>
@@ -138,8 +138,10 @@
     </div>
   </section>
 </template>
-<Router-view></Router-view>
+
 <script>
+
+// import {mapState} from "vuex";
 import axios from "axios";
 import swal from "sweetalert2";
 import userform from "@/components/userform.vue";
@@ -148,6 +150,10 @@ import headers from "@/components/header.vue";
 export default {
   name: "dash-board",
   components: { headers, userform },
+  // computed: mapState(['post']),
+  // created() {
+  //   this.$store.dispatch('getdata');
+  // },
   data() {
     return {
       post: [],
@@ -319,7 +325,7 @@ export default {
       }
     },
   },
-  created() {
+  mounted() {
     this.getdata();
    
 },

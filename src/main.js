@@ -6,8 +6,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 // import VueSimpleAlert from "vue-simple-alert";
 import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css'
+import 'sweetalert2/dist/sweetalert2.min.css';
+import store from "./store/store";
 
 
 
-createApp(App).use(router,VueSweetalert2, axios,Vuelidate).mount("#app");
+createApp(App).use(router,VueSweetalert2, axios,Vuelidate,store).mount("#app");
